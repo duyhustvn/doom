@@ -58,3 +58,5 @@
 (package! paren)
 (package! engine-mode)
 (package! exwm)
+(package! org-bullets)
+(package! visual-fill-column)
