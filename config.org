@@ -1,3 +1,8 @@
+#+title: Doom Emacs Config
+#+PROPERTY: header-args:emacs-lisp :tangle ./config-new.el
+
+* Identify
+#+begin_src emacs-lisp
 ;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
 
 ;; Place your private configuration here! Remember, you do not need to run 'doom
@@ -40,7 +45,10 @@
 ;;
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
+#+end_src
 
+* UI Configuration
+#+begin_src emacs-lisp
 ;; Doom exposes five (optional) variables for controlling fonts in Doom:
 ;;
 ;; - `doom-font' -- the primary font to use
@@ -107,13 +115,20 @@
 (use-package! treemacs-projectile
   :after (treemacs projectile)
 )
+#+end_src
 
+* Lsp mode
+** Ignore files watch
+#+begin_src emacs-lisp
 (with-eval-after-load 'lsp-mode
   (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\env3\\'")
   ;; or
   ;; (add-to-list 'lsp-file-watch-ignored-files "[/\\\\]\\.my-files\\'")
 )
+#+end_src
 
+* Dap mode
+#+begin_src emacs-lisp
 (use-package! dap-mode
   ;; :init
   ;; code here will be run immediately
@@ -134,12 +149,18 @@
   (require 'dap-python)
   (setq dap-python-debugger 'debugpy)
 )
+#+end_src
 
+* Undo
+#+begin_src emacs-lisp
 (use-package! undo-tree
   :config
   (global-undo-tree-mode +1)
 )
+#+end_src
 
+* Engine mode
+#+begin_src emacs-lisp
 (use-package! engine-mode
   :config
   (setq engine/browser-function 'browse-url-firefox)
@@ -147,7 +168,10 @@
     "http://www.google.com/search?ie=utf-8&oe=utf-8&q=%s")
   (engine-mode 1)
 )
+#+end_src
 
+* Exwm
+#+begin_src emacs-lisp
 (defun efs/exwm-update-class ()
   (exwm-workspace-rename-buffer exwm-class-name))
 
@@ -220,23 +244,37 @@
 
   (exwm-enable))
 
+#+end_src
+
+* Org mode
+** Font faces
+#+begin_src emacs-lisp
 (defun efs/org-font-setup ()
   ;; Replace list hyphen with dot
   (font-lock-add-keywords 'org-mode
                           '(("^ *\\([-]\\) "
                              (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•")))))))
+#+end_src
 
+** Nicer Heading Bullets
+#+begin_src emacs-lisp
 (use-package! org-bullets
   :after org
   :hook (org-mode . org-bullets-mode)
   :custom
   (org-bullets-bullet-list '("◉" "○" "●" "○" "●" "○" "●")))
+#+end_src
 
+** Configure Babel Language
+#+begin_src emacs-lisp
 (org-babel-do-load-languages
   'org-babel-load-languages
   '((emacs-lisp . t)
     (python . t)))
+#+end_src
 
+** Configure
+#+begin_src emacs-lisp
 (defun efs/org-mode-setup ()
   (org-indent-mode)
   ;; (variable-pitch-mode 1)
@@ -338,3 +376,5 @@
 
 ; (use-package! visual-fill-column
 ;   :hook (org-mode . efs/org-mode-visual-fill))
+
+#+end_src
