@@ -60,3 +60,4 @@
 (package! exwm)
 (package! org-bullets)
 (package! visual-fill-column)
+(package! desktop-environment)
