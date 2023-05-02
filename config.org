@@ -175,6 +175,18 @@
 (defun efs/exwm-update-class ()
   (exwm-workspace-rename-buffer exwm-class-name))
 
+(defun efs/run-in-background (command)
+  (let ((command-parts (split-string command "[ ]+")))
+    (apply #'call-process `(,(car command-parts) nil 0 nil ,@(cdr command-parts)))))
+
+(defun efs/exwm-init-hook ()
+  ;; make workspace 1 be the one where we land at startup
+  (exwm-workspace-switch-create 1)
+
+  ;; Launch app that will run in the background
+  (efs/run-in-background "nm-applet")
+)
+
 (use-package! exwm
   :config
   ;; Set the default number of workspaces
@@ -185,6 +197,9 @@
 
   ;; Rebind CapsLock to Ctrl
   ;; (start-process-shell-command "xmodmap" nil "xmodmap ~/.emacs.d/exwm/Xmodmap")
+
+  ;; When EXWM starts up, do some extra confifuration
+  (add-hook 'exwm-init-hook #'efs/exwm-init-hook)
 
   ;; Set the screen resolution (update this to be the correct resolution for your screen!)
   (require 'exwm-randr)
@@ -263,14 +278,6 @@
   :hook (org-mode . org-bullets-mode)
   :custom
   (org-bullets-bullet-list '("◉" "○" "●" "○" "●" "○" "●")))
-#+end_src
-
-** Configure Babel Language
-#+begin_src emacs-lisp
-(org-babel-do-load-languages
-  'org-babel-load-languages
-  '((emacs-lisp . t)
-    (python . t)))
 #+end_src
 
 ** Configure
@@ -377,4 +384,25 @@
 ; (use-package! visual-fill-column
 ;   :hook (org-mode . efs/org-mode-visual-fill))
 
+#+end_src
+
+** Configure Babel Language
+#+begin_src emacs-lisp
+(org-babel-do-load-languages
+  'org-babel-load-languages
+  '((emacs-lisp . t)
+    (python . t)))
+#+end_src
+
+** Auto-tangle Configuration Files
+This snippet adds a hook to org-mode buffers so that efs/org-babel-tangle-config gets executed each time such a buffer gets saved. This function checks to see if the file being saved is the Emacs.org file you’re looking at right now, and if so, automatically exports the configuration here to the associated output files.
+#+begin_src emacs-lisp
+(defun efs/org-babel-tangle-config ()
+  (when (string-equal (file-name-directory (buffer-file-name))
+                      (expand-file-name "~/.config/doom/"))
+    ;; Dynamic scoping to the rescue
+    (let ((org-confirm-babel-evaluate nil))
+      (org-babel-tangle))))
+
+(add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'efs/org-babel-tangle-config)))
 #+end_src
