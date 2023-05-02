@@ -71,6 +71,13 @@
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
 (setq display-line-numbers-type t)
+
+;; Set frame transparency
+(set-frame-parameter (selected-frame) 'alpha '(90 . 90))
+(add-to-list 'default-frame-alist '(alpha . (90 . 90)))
+(set-frame-parameter (selected-frame) 'fullscreen 'maximized)
+(add-to-list 'default-frame-alist '(fullscreen . maximized))
+
 ;; VISUAL
 (use-package! all-the-icons)
 (use-package! all-the-icons-dired
@@ -155,6 +162,12 @@
   (let ((command-parts (split-string command "[ ]+")))
     (apply #'call-process `(,(car command-parts) nil 0 nil ,@(cdr command-parts)))))
 
+(defun efs/set-wallpaper ()
+  (interactive)
+  ;; NOTE: You will need to update this to a valid background path!
+  (start-process-shell-command
+      "feh" nil "feh --bg-scale /usr/share/backgrounds/Mirror_by_Uday_Nakade.jpg"))
+
 (defun efs/exwm-init-hook ()
   ;; make workspace 1 be the one where we land at startup
   (exwm-workspace-switch-create 1)
@@ -182,8 +195,12 @@
   (exwm-randr-enable)
   ;; (start-process-shell-command "xrandr" nil "xrandr --output Virtual-1 --primary --mode 2048x1152 --pos 0x0 --rotate normal")
 
+  ;; set wallpaper
+  (efs/set-wallpaper)
+
   ;; Load the system tray before exwm-init
   (require 'exwm-systemtray)
+  (setq exwm-systemtray-height 32)
   (exwm-systemtray-enable)
 
   ;; These keys should always pass through to Emacs
