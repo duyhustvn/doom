@@ -72,6 +72,13 @@
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
 (setq display-line-numbers-type t)
 
+;; show battery status in the mode line
+(display-battery-mode 1)
+
+;; show the date and time in the mode line
+(setq display-time-day-and-date t)
+(display-time-mode 1)
+
 ;; Set frame transparency
 (set-frame-parameter (selected-frame) 'alpha '(90 . 90))
 (add-to-list 'default-frame-alist '(alpha . (90 . 90)))
@@ -207,7 +214,7 @@
 
   ;; Load the system tray before exwm-init
   (require 'exwm-systemtray)
-  (setq exwm-systemtray-height 30)
+  (setq exwm-systemtray-height 20)
   (exwm-systemtray-enable)
 
   ;; These keys should always pass through to Emacs
