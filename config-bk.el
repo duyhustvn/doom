@@ -174,6 +174,8 @@
 
   ;; Launch app that will run in the background
   (efs/run-in-background "nm-applet")
+  (efs/run-in-background "pasystray")
+  (efs/run-in-background "blueman-applet")
 )
 
 (use-package! exwm
@@ -200,7 +202,7 @@
 
   ;; Load the system tray before exwm-init
   (require 'exwm-systemtray)
-  (setq exwm-systemtray-height 32)
+  (setq exwm-systemtray-height 30)
   (exwm-systemtray-enable)
 
   ;; These keys should always pass through to Emacs

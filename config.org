@@ -177,6 +177,14 @@
 )
 #+end_src
 
+* Counsel
+#+begin_src emacs-lisp
+(use-package! counsel
+  :config
+  (counsel-mode 1)
+)
+#+end_src
+
 * Exwm
 #+begin_src emacs-lisp
 (defun efs/exwm-update-class ()
