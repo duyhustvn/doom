@@ -155,6 +155,11 @@
   (engine-mode 1)
 )
 
+(use-package! counsel
+  :config
+  (counsel-mode 1)
+)
+
 (defun efs/exwm-update-class ()
   (exwm-workspace-rename-buffer exwm-class-name))
 

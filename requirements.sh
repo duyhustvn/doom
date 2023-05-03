@@ -8,3 +8,6 @@ sudo apt install -y scrot brightnessctl playerctl
 
 # For tray apps
 sudo apt install -y blueman pasystray pavucontrol
+
+# For locking screen
+sudo apt install -y xss-lock suckless-tools
