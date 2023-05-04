@@ -174,6 +174,14 @@
   (pcase exwm-class-name
     ("firefox" (exwm-workspace-rename-buffer (format "Firefox: %s" exwm-title)))))
 
+(defun efs/config-window-by-class ()
+  (interactive)
+  (pcase exwm-class-name
+    ("firefox" (exwm-workspace-move-window 2)
+                (exwm-workspace-switch-create 2))
+  )
+)
+
 (defun efs/run-in-background (command)
   (let ((command-parts (split-string command "[ ]+")))
     (apply #'call-process `(,(car command-parts) nil 0 nil ,@(cdr command-parts)))))
@@ -204,6 +212,9 @@
 
   ;; When window title updates, use it to set the buffer name
   (add-hook 'exwm-update-title-hook #'efs/exwm-update-title)
+
+  ;; Config window as they're created
+  (add-hook 'exwm-manage-finish-hook #'efs/config-window-by-class)
 
   ;; Rebind CapsLock to Ctrl
   ;; (start-process-shell-command "xmodmap" nil "xmodmap ~/.emacs.d/exwm/Xmodmap")
