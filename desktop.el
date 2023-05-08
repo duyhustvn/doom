@@ -28,6 +28,7 @@
   (exwm-workspace-switch-create 1)
 
   ;; Launch app that will run in the background
+  (efs/run-in-background "dunst")
   (efs/run-in-background "nm-applet")
   (efs/run-in-background "pasystray")
   (efs/run-in-background "blueman-applet")
@@ -62,14 +63,15 @@
   (require 'exwm-randr)
   (exwm-randr-enable)
   ;; xrandr --output DisplayPort-0 --primary --mode 1920x1080 --rate 144.00 --output DVI-D-0 --mode 1920x1080 --rate 60.00 --right-of DisplayPort-0
-  (start-process-shell-command "xrandr" nil "xrandr --output eDP-1 --primary --mode 1920x1080 --rate 60.00 --output HDMI-2 --mode 1920x1080 --rate 60.00 --right-of eDP-1")
+  (start-process-shell-command "xrandr" nil "xrandr --output eDP-1 --primary --mode 1920x1080 --rate 60.00
+               --output DP-1 --mode 1920x1080 --rate 60.00 --right-of eDP-1")
 
   ;; This will need to be updated to the name of a display!  You can find
   ;; the names of your displays by looking at arandr or the output of xrandr
   ;; (setq exwm-randr-workspace-monitor-plist '(2 "HDMI-2"))
   (setq exwm-randr-workspace-monitor-plist
     (pcase (system-name)
-      ("duyhustvn" '(2 "HDMI-2"))
+      ("duyhustvn" '(2 "DP-1"))
       ))
 
   ;; react to display connectivity changes, do initial display update
@@ -145,3 +147,18 @@
   (desktop-environment-brightness-small-decrement "2%-")
   (desktop-environment-brightness-normal-increment "5%+")
   (desktop-environment-brightness-normal-decrement "5%-"))
+
+(defun sodcof/disable-desktop-notification()
+  (interactive)
+  (start-process-shell-command "notify-send" nil "notify-send \"DUNST_COMMAND_PAUSE\"")
+)
+
+(defun sodcof/enable-desktop-notification()
+  (interactive)
+  (start-process-shell-command "notify-send" nil "notify-send \"DUNST_COMMAND_RESUME\"")
+)
+
+(defun sodcof/toggle-desktop-notification()
+  (interactive)
+  (start-process-shell-command "notify-send" nil "notify-send \"DUNST_COMMAND_TOGGLE\"")
+)
