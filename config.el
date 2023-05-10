@@ -72,13 +72,6 @@
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
 (setq display-line-numbers-type t)
 
-;; show battery status in the mode line
-(display-battery-mode 1)
-
-;; show the date and time in the mode line
-(setq display-time-day-and-date t)
-(display-time-mode 1)
-
 ;; Set frame transparency
 (set-frame-parameter (selected-frame) 'alpha '(90 . 90))
 (add-to-list 'default-frame-alist '(alpha . (90 . 90)))
@@ -121,6 +114,13 @@
 (use-package! treemacs-projectile
   :after (treemacs projectile)
 )
+
+;; show battery status in the mode line
+(display-battery-mode 1)
+
+;; show the date and time in the mode line
+(setq display-time-day-and-date t)
+(display-time-mode 1)
 
 (with-eval-after-load 'lsp-mode
   (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\env3\\'")

@@ -8,10 +8,11 @@
 (defun efs/config-window-by-class ()
   (interactive)
   (pcase exwm-class-name
-    ("firefox" (exwm-workspace-move-window 2)
-                (exwm-workspace-switch-create 2))
-  )
-)
+    ("firefox" (exwm-workspace-move-window 2)(exwm-workspace-switch-create 2))
+    ("thunderbird" (exwm-workspace-move-window 3)(exwm-workspace-switch-create 3))
+    ("ViberPC" (exwm-workspace-move-window 3)(exwm-workspace-switch-create 3))
+    ("TelegramDesktop" (exwm-workspace-move-window 3)(exwm-workspace-switch-create 3))
+))
 
 (defun efs/run-in-background (command)
   (let ((command-parts (split-string command "[ ]+")))
@@ -114,10 +115,10 @@
           ([?\s-r] . exwm-reset)
 
           ;; Move between windows
-          ([s-left] . windmove-left)
-          ([s-right] . windmove-right)
-          ([s-up] . windmove-up)
-          ([s-down] . windmove-down)
+          ([C-s-left] . windmove-left)
+          ([C-s-right] . windmove-right)
+          ([C-s-up] . windmove-up)
+          ([C-s-down] . windmove-down)
 
           ;; Launch applications via shell command
           ([?\s-&] . (lambda (command)
@@ -136,6 +137,8 @@
                           (exwm-workspace-switch-create ,i))))
                     (number-sequence 0 9))))
 
+  (exwm-input-set-key (kbd "s-a") 'counsel-linux-app)
+  (exwm-input-set-key (kbd "s-b") 'switch-to-buffer)
   (exwm-enable))
 
 
