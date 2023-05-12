@@ -126,12 +126,15 @@
 
 * Mode line
 #+begin_src emacs-lisp
-;; show battery status in the mode line
-(display-battery-mode 1)
+(after! doom-modeline
+  (setq doom-modeline-buffer-encoding nil)
+  ;; (setq doom-modeline-env-enable-python nil)
 
-;; show the date and time in the mode line
-(setq display-time-day-and-date t)
-(display-time-mode 1)
+  (setq display-time-default-load-average nil)      ; don't show load average
+  (display-battery-mode 1)
+  (setq display-time-day-and-date t)
+  (display-time-mode 1)
+)
 #+end_src
 
 * Lsp mode
