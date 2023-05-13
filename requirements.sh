@@ -24,6 +24,9 @@ install_go_tool() {
 
   # Add `json` or `bson` to structs easily
   go install github.com/fatih/gomodifytags@latest
+
+  # delve golang debug
+  go install github.com/go-delve/delve/cmd/dlv@latest
 }
 
 install_go_tool

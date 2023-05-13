@@ -17,6 +17,8 @@
     ("thunderbird" (exwm-workspace-move-window 3)(exwm-workspace-switch-create 3))
     ("ViberPC" (exwm-workspace-move-window 3)(exwm-workspace-switch-create 3))
     ("TelegramDesktop" (exwm-workspace-move-window 3)(exwm-workspace-switch-create 3))
+    ("Postman" (exwm-workspace-move-window 4)(exwm-workspace-switch-create 4))
+    ("DBeaver" (exwm-workspace-move-window 4)(exwm-workspace-switch-create 4))
 ))
 
 (defun efs/run-in-background (command)

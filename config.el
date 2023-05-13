@@ -150,6 +150,22 @@
   ;;
   (require 'dap-python)
   (setq dap-python-debugger 'debugpy)
+  (require 'dap-dlv-go)
+)
+
+(after! dap-dlv-go
+  ;; Eval Buffer with `M-x eval-buffer' to register the newly created template.
+  (dap-register-debug-template
+   "Custom Launch File"
+   (list :type "go"
+         :cwd (lsp-workspace-root)
+        :request "launch"
+        :name "Custom Launch File"
+        :mode "auto"
+        :program nil
+        :buildFlags nil
+        :args nil
+        :env nil))
 )
 
 (use-package! undo-tree
