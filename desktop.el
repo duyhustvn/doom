@@ -46,8 +46,6 @@
   ;; make workspace 1 be the one where we land at startup
   ;; (exwm-workspace-switch-create 1)
   (sodcof/startup-program)
-
-
 )
 
 (defun efs/update-displays ()
