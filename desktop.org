@@ -31,15 +31,28 @@
   (start-process-shell-command
       "feh" nil "feh --bg-scale /usr/share/backgrounds/Mirror_by_Uday_Nakade.jpg"))
 
-(defun efs/exwm-init-hook ()
-  ;; make workspace 1 be the one where we land at startup
-  (exwm-workspace-switch-create 1)
+(defun sodcof/startup-program()
+  (exwm-workspace-switch-create 3)
+  (start-process-shell-command "Viber" nil "Viber")
 
   ;; Launch app that will run in the background
   (efs/run-in-background "dunst")
   (efs/run-in-background "nm-applet")
   (efs/run-in-background "pasystray")
   (efs/run-in-background "blueman-applet")
+
+  (split-window-right)
+  (windmove-right)
+
+  (start-process-shell-command "thunderbird" nil "thunderbird")
+)
+
+(defun efs/exwm-init-hook ()
+  ;; make workspace 1 be the one where we land at startup
+  ;; (exwm-workspace-switch-create 1)
+  (sodcof/startup-program)
+
+
 )
 
 (defun efs/update-displays ()
