@@ -1,6 +1,17 @@
 #+title: Desktop
 #+PROPERTY: header-args:emacs-lisp
 
+
+* Background
+#+begin_src emacs-lisp :tangle ./desktop.el
+(defun efs/set-wallpaper ()
+  (interactive)
+  ;; NOTE: You will need to update this to a valid background path!
+  (start-process-shell-command
+      "feh" nil "feh --bg-scale /usr/share/backgrounds/Mirror_by_Uday_Nakade.jpg"))
+
+#+end_src
+
 * Exwm
 #+begin_src emacs-lisp :tangle ./desktop.el
 (defun efs/exwm-update-class ()
@@ -24,28 +35,6 @@
 (defun efs/run-in-background (command)
   (let ((command-parts (split-string command "[ ]+")))
     (apply #'call-process `(,(car command-parts) nil 0 nil ,@(cdr command-parts)))))
-
-(defun efs/set-wallpaper ()
-  (interactive)
-  ;; NOTE: You will need to update this to a valid background path!
-  (start-process-shell-command
-      "feh" nil "feh --bg-scale /usr/share/backgrounds/Mirror_by_Uday_Nakade.jpg"))
-
-(defun sodcof/startup-program()
-  (exwm-workspace-switch-create 3)
-  (start-process-shell-command "Viber" nil "Viber")
-
-  ;; Launch app that will run in the background
-  (efs/run-in-background "dunst")
-  (efs/run-in-background "nm-applet")
-  (efs/run-in-background "pasystray")
-  (efs/run-in-background "blueman-applet")
-
-  (split-window-right)
-  (windmove-right)
-
-  (start-process-shell-command "thunderbird" nil "thunderbird")
-)
 
 (defun efs/exwm-init-hook ()
   ;; make workspace 1 be the one where we land at startup
@@ -160,17 +149,8 @@
   (exwm-enable))
 
 
-(use-package! desktop-environment
-  :after exwm
-  :config (desktop-environment-mode)
-  :custom
-  (desktop-environment-brightness-small-increment "2%+")
-  (desktop-environment-brightness-small-decrement "2%-")
-  (desktop-environment-brightness-normal-increment "5%+")
-  (desktop-environment-brightness-normal-decrement "5%-"))
 
 #+end_src
-
 
 * Desktop notification
 #+begin_src conf :tangle ~/.config/dunst/dunstrc :mkdirp yes
@@ -392,5 +372,38 @@
 (defun sodcof/toggle-desktop-notification()
   (interactive)
   (start-process-shell-command "notify-send" nil "notify-send \"DUNST_COMMAND_TOGGLE\"")
+)
+#+end_src
+
+
+* Desktop environment
+#+begin_src emacs-lisp :tangle ./desktop.el
+(use-package! desktop-environment
+  :after exwm
+  :config (desktop-environment-mode)
+  :custom
+  (desktop-environment-brightness-small-increment "2%+")
+  (desktop-environment-brightness-small-decrement "2%-")
+  (desktop-environment-brightness-normal-increment "5%+")
+  (desktop-environment-brightness-normal-decrement "5%-"))
+
+#+end_src
+
+* Startup program
+#+begin_src emacs-lisp :tangle ./desktop.el
+(defun sodcof/startup-program()
+  (exwm-workspace-switch-create 3)
+  (start-process-shell-command "Viber" nil "Viber")
+
+  ;; Launch app that will run in the background
+  (efs/run-in-background "dunst")
+  (efs/run-in-background "nm-applet")
+  (efs/run-in-background "pasystray")
+  (efs/run-in-background "blueman-applet")
+
+  (split-window-right)
+  (windmove-right)
+
+  (start-process-shell-command "thunderbird" nil "thunderbird")
 )
 #+end_src

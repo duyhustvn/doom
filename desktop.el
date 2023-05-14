@@ -1,3 +1,9 @@
+(defun efs/set-wallpaper ()
+  (interactive)
+  ;; NOTE: You will need to update this to a valid background path!
+  (start-process-shell-command
+      "feh" nil "feh --bg-scale /usr/share/backgrounds/Mirror_by_Uday_Nakade.jpg"))
+
 (defun efs/exwm-update-class ()
   (exwm-workspace-rename-buffer exwm-class-name))
 
@@ -19,28 +25,6 @@
 (defun efs/run-in-background (command)
   (let ((command-parts (split-string command "[ ]+")))
     (apply #'call-process `(,(car command-parts) nil 0 nil ,@(cdr command-parts)))))
-
-(defun efs/set-wallpaper ()
-  (interactive)
-  ;; NOTE: You will need to update this to a valid background path!
-  (start-process-shell-command
-      "feh" nil "feh --bg-scale /usr/share/backgrounds/Mirror_by_Uday_Nakade.jpg"))
-
-(defun sodcof/startup-program()
-  (exwm-workspace-switch-create 3)
-  (start-process-shell-command "Viber" nil "Viber")
-
-  ;; Launch app that will run in the background
-  (efs/run-in-background "dunst")
-  (efs/run-in-background "nm-applet")
-  (efs/run-in-background "pasystray")
-  (efs/run-in-background "blueman-applet")
-
-  (split-window-right)
-  (windmove-right)
-
-  (start-process-shell-command "thunderbird" nil "thunderbird")
-)
 
 (defun efs/exwm-init-hook ()
   ;; make workspace 1 be the one where we land at startup
@@ -154,16 +138,6 @@
   (exwm-input-set-key (kbd "s-b") 'switch-to-buffer)
   (exwm-enable))
 
-
-(use-package! desktop-environment
-  :after exwm
-  :config (desktop-environment-mode)
-  :custom
-  (desktop-environment-brightness-small-increment "2%+")
-  (desktop-environment-brightness-small-decrement "2%-")
-  (desktop-environment-brightness-normal-increment "5%+")
-  (desktop-environment-brightness-normal-decrement "5%-"))
-
 (defun sodcof/disable-desktop-notification()
   (interactive)
   (start-process-shell-command "notify-send" nil "notify-send \"DUNST_COMMAND_PAUSE\"")
@@ -177,4 +151,29 @@
 (defun sodcof/toggle-desktop-notification()
   (interactive)
   (start-process-shell-command "notify-send" nil "notify-send \"DUNST_COMMAND_TOGGLE\"")
+)
+
+(use-package! desktop-environment
+  :after exwm
+  :config (desktop-environment-mode)
+  :custom
+  (desktop-environment-brightness-small-increment "2%+")
+  (desktop-environment-brightness-small-decrement "2%-")
+  (desktop-environment-brightness-normal-increment "5%+")
+  (desktop-environment-brightness-normal-decrement "5%-"))
+
+(defun sodcof/startup-program()
+  (exwm-workspace-switch-create 3)
+  (start-process-shell-command "Viber" nil "Viber")
+
+  ;; Launch app that will run in the background
+  (efs/run-in-background "dunst")
+  (efs/run-in-background "nm-applet")
+  (efs/run-in-background "pasystray")
+  (efs/run-in-background "blueman-applet")
+
+  (split-window-right)
+  (windmove-right)
+
+  (start-process-shell-command "thunderbird" nil "thunderbird")
 )
