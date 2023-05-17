@@ -191,6 +191,19 @@
   (require 'dap-python)
   (setq dap-python-executable "python3")
   (setq dap-python-debugger 'debugpy)
+
+  ;; Eval Buffer with `M-x eval-buffer' to register the newly created template.
+  (dap-register-debug-template
+   "Django: Debug Template"
+   (list :type "python"
+         :args "runserver 8083"
+         :cwd (lsp-workspace-root)
+         :request "launch"
+         :name "Django: Debug Template"
+         :program "manage.py"
+         :env '(("PYTHONPATH" . "env3/bin/python"))
+         :django t
+    ))
 )
 #+end_src
 

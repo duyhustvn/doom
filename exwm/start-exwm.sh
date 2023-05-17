@@ -4,6 +4,7 @@
 # run command 'xinput -list-props ID' to list properties of device
 # enable natural scrolling
 xinput set-prop "pointer:Synaptics TM3276-022" "libinput Natural Scrolling Enabled" 1
+xinput set-prop "pointer:Synaptics TM3276-022" "libinput Tapping Enabled" 1
 
 # start picom first
 picom &
