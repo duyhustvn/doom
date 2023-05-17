@@ -180,7 +180,8 @@
          :request "launch"
          :name "Django: Debug Template"
          :program "manage.py"
-         :env '(("PYTHONPATH" . "env3/bin/python"))
+         ;; :env '(("PYTHONPATH" . "env3/bin/python"))
+         :pythonPath "env3/bin/python"
          :django t
     ))
 )
