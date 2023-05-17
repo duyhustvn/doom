@@ -62,15 +62,14 @@
   (exwm-randr-enable)
   ;; xrandr --output DisplayPort-0 --primary --mode 1920x1080 --rate 144.00 --output DVI-D-0 --mode 1920x1080 --rate 60.00 --right-of DisplayPort-0
   (start-process-shell-command "xrandr" nil "xrandr --output eDP-1 --primary --mode 1920x1080 --rate 60.00
-               --output DP-1 --mode 1920x1080 --rate 60.00 --right-of eDP-1")
+               --output DP-1 --mode 1920x1080 --rate 60.00
+               --output HDMI-2 --mode 1920x1080 --rate 60.00
+  ")
 
   ;; This will need to be updated to the name of a display!  You can find
   ;; the names of your displays by looking at arandr or the output of xrandr
-  ;; (setq exwm-randr-workspace-monitor-plist '(2 "HDMI-2"))
-  (setq exwm-randr-workspace-monitor-plist
-    (pcase (system-name)
-      ("duyhustvn" '(2 "DP-1"))
-      ))
+  (setq exwm-randr-workspace-monitor-plist '(2 "HDMI-2"))
+  ;; (setq exwm-randr-workspace-monitor-plist '(2 "DP-1"))
 
   ;; react to display connectivity changes, do initial display update
   (add-hook 'exwm-randr-screen-change-hook #'efs/update-displays)

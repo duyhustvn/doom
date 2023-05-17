@@ -148,8 +148,6 @@
   ;; requies emacs 26+
   (dap-ui-controls-mode 1)
   ;;
-  (require 'dap-python)
-  (setq dap-python-debugger 'debugpy)
   (require 'dap-dlv-go)
 )
 
@@ -166,6 +164,12 @@
         :buildFlags nil
         :args nil
         :env nil))
+)
+
+(after! dap-mode
+  (require 'dap-python)
+  (setq dap-python-executable "python3")
+  (setq dap-python-debugger 'debugpy)
 )
 
 (use-package! undo-tree
