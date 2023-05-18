@@ -85,8 +85,8 @@
   (require 'exwm-randr)
   (exwm-randr-enable)
   ;; xrandr --output DisplayPort-0 --primary --mode 1920x1080 --rate 144.00 --output DVI-D-0 --mode 1920x1080 --rate 60.00 --right-of DisplayPort-0
-  (start-process-shell-command "xrandr" nil "xrandr --output eDP-1 --primary --mode 1920x1080 --rate 60.00
-               --output DP-1 --mode 1920x1080 --rate 60.00")
+  ; (start-process-shell-command "xrandr" nil "xrandr --output eDP-1 --primary --mode 1920x1080 --rate 60.00
+  ;             --output DP-1 --mode 1920x1080 --rate 60.00")
 
   ;; This will need to be updated to the name of a display!  You can find
   ;; the names of your displays by looking at arandr or the output of xrandr
@@ -100,6 +100,9 @@
           (setq attached-monitor (nth 1 monitors))
           ;;(message "attached-monitor: %s" attached-monitor)
           ;;(message "main-monitor: %s" main-monitor)
+          (setq xrandr-command (format "xrandr --output %s --primary --mode 1920x1080 --rate 60.00
+               --output %s --mode 1920x1080 --rate 60.00" main-monitor attached-monitor))
+          (start-process-shell-command "xrandr" nil xrandr-command)
           (setq exwm-randr-workspace-monitor-plist (list 2 attached-monitor))
         )
     )
