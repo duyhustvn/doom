@@ -115,6 +115,14 @@
   :after (treemacs projectile)
 )
 
+(use-package! pdf-tools
+  :mode ("\\.pdf\\'" . pdf-view-mode)
+  :config
+  (setq pdf-view-display-size 'fit-page)
+  (setq pdf-view-resize-factor 1.1)
+  (setq pdf-continuous-scroll-mode t)
+)
+
 (after! doom-modeline
   (setq doom-modeline-buffer-encoding nil)
   ;; (setq doom-modeline-env-enable-python nil)
@@ -154,13 +162,13 @@
 (after! dap-dlv-go
   ;; Eval Buffer with `M-x eval-buffer' to register the newly created template.
   (dap-register-debug-template
-   "Custom Launch File"
+   "Go: Custom Launch File"
    (list :type "go"
          :cwd (lsp-workspace-root)
         :request "launch"
-        :name "Custom Launch File"
+        :name "Go: Custom Launch File"
         :mode "auto"
-        :program nil
+        :program "main.go"
         :buildFlags nil
         :args nil
         :env nil))
