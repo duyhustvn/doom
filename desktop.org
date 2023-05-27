@@ -1,6 +1,20 @@
 #+title: Desktop
 #+PROPERTY: header-args:emacs-lisp
 
+* Natural scroll
+#+begin_src emacs-lisp :tangle ./desktop.el
+(defun sodcof/natural-scroll-activated ()
+  (start-process-shell-command "xinput" nil "xinput set-prop 'pointer:Synaptics TM3276-022' 'libinput Natural Scrolling Enabled' 1")
+)
+#+end_src
+
+* Touchpad tapping
+#+begin_src emacs-lisp :tangle ./desktop.el
+(defun sodcof/touchpad-tapping-activated ()
+  (start-process-shell-command "xinput" nil "xinput set-prop 'pointer:Synaptics TM3276-022' 'libinput Tapping Enabled' 1")
+)
+#+end_src
+
 
 * Background
 #+begin_src emacs-lisp :tangle ./desktop.el
@@ -116,6 +130,12 @@
 
   ;; set wallpaper
   (efs/set-wallpaper)
+
+  ;; enable natural scroll
+  (sodcof/natural-scroll-activated)
+
+  ;; enable touchpad tapping
+  (sodcof/touchpad-tapping-activated)
 
   ;; Load the system tray before exwm-init
   (require 'exwm-systemtray)

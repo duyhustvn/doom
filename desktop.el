@@ -1,3 +1,11 @@
+(defun sodcof/natural-scroll-activated ()
+  (start-process-shell-command "xinput" nil "xinput set-prop 'pointer:Synaptics TM3276-022' 'libinput Natural Scrolling Enabled' 1")
+)
+
+(defun sodcof/touchpad-tapping-activated ()
+  (start-process-shell-command "xinput" nil "xinput set-prop 'pointer:Synaptics TM3276-022' 'libinput Tapping Enabled' 1")
+)
+
 (defun efs/set-wallpaper ()
   (interactive)
   ;; NOTE: You will need to update this to a valid background path!
@@ -101,6 +109,12 @@
 
   ;; set wallpaper
   (efs/set-wallpaper)
+
+  ;; enable natural scroll
+  (sodcof/natural-scroll-activated)
+
+  ;; enable touchpad tapping
+  (sodcof/touchpad-tapping-activated)
 
   ;; Load the system tray before exwm-init
   (require 'exwm-systemtray)
