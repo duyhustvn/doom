@@ -47,6 +47,7 @@
 ;; they are implemented.
 #+end_src
 
+
 * UI Configuration
 #+begin_src emacs-lisp
 ;; Doom exposes five (optional) variables for controlling fonts in Doom:
@@ -136,6 +137,7 @@
 )
 #+end_src
 
+
 * Mode line
 #+begin_src emacs-lisp
 (after! doom-modeline
@@ -149,6 +151,7 @@
 )
 #+end_src
 
+
 * Lsp mode
 ** Ignore files watch
 #+begin_src emacs-lisp
@@ -158,6 +161,7 @@
   ;; (add-to-list 'lsp-file-watch-ignored-files "[/\\\\]\\.my-files\\'")
 )
 #+end_src
+
 
 * Dap mode
 #+begin_src emacs-lisp
@@ -220,6 +224,7 @@
 )
 #+end_src
 
+
 * Undo
 #+begin_src emacs-lisp
 (use-package! undo-tree
@@ -227,6 +232,7 @@
   (global-undo-tree-mode +1)
 )
 #+end_src
+
 
 * Engine mode
 #+begin_src emacs-lisp
@@ -239,6 +245,7 @@
 )
 #+end_src
 
+
 * Counsel
 #+begin_src emacs-lisp
 (use-package! counsel
@@ -246,6 +253,7 @@
   (counsel-mode 1)
 )
 #+end_src
+
 
 * Org mode
 ** Font faces
