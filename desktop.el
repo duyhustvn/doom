@@ -188,6 +188,8 @@
 (defun sodcof/startup-program()
   (exwm-workspace-switch-create 3)
   (start-process-shell-command "Viber" nil "Viber")
+  (start-process-shell-command "telegram-desktop" nil "telegram-desktop")
+  (start-process-shell-command "thunderbird" nil "thunderbird")
 
   ;; Launch app that will run in the background
   (efs/run-in-background "dunst")
@@ -196,7 +198,6 @@
   (efs/run-in-background "blueman-applet")
 
   (split-window-right)
+  (split-window-below)
   (windmove-right)
-
-  (start-process-shell-command "thunderbird" nil "thunderbird")
 )
