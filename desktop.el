@@ -188,6 +188,7 @@
 
   (exwm-input-set-key (kbd "s-a") 'counsel-linux-app)
   (exwm-input-set-key (kbd "s-b") 'switch-to-buffer)
+  (exwm-input-set-key (kbd "s-h") 'dap-hydra)
   (exwm-enable))
 
 (defun sodcof/disable-desktop-notification()
