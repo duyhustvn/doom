@@ -1,9 +1,9 @@
 #!/bin/bash
 
 # Start ssh-agent
-if [ -z "$SSH_AUTH_SOCK" ] ; then
-   eval `ssh-agent -s`
-fi
+# if [ -z "$SSH_AUTH_SOCK" ] ; then
+#    eval `ssh-agent -s`
+# fi
 
 # Set up ssh-agent and keychain in Emacs
 # if [ -n "$DISPLAY" ] && [ -z "$SSH_AUTH_SOCK" ] && [ -f "/usr/bin/gnome-keyring-daemon" ]; then

@@ -23,6 +23,18 @@
   (split-string all-monitor "\n" t) ; => ("eDP-1" "DP-1")
 )
 
+(defun sodcof/ssh-auth-sock-exists-p()
+  ;; check if SSH_AUTH_SOCK enviroment variable is set and points to a valid socket
+  (let ((auth-sock (getenv "SSH_AUTH_SOCK")))
+    (and auth-sock (file-exists-p auth-sock) auth-sock))
+)
+
+(defun sodcof/ssh-auth-enable()
+  (if (sodcof/ssh-auth-sock-exists-p)
+      (start-process-shell-command "ssh-agent" nil "ssh-agent")
+  )
+)
+
 (defun efs/exwm-update-class ()
   (exwm-workspace-rename-buffer exwm-class-name))
 
@@ -115,6 +127,9 @@
 
   ;; enable touchpad tapping
   (sodcof/touchpad-tapping-activated)
+
+  ;; enable ssh-agent
+  (sodcof/ssh-auth-enable)
 
   ;; Load the system tray before exwm-init
   (require 'exwm-systemtray)

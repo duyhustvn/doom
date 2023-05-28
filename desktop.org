@@ -41,6 +41,24 @@
 )
 #+end_src
 
+* Ssh agent
+*getenv* is a built-in Emacs Lisp function that retrieves the value of an environment variable. It takes a string argument representing the name of the environment variable whose value you want to retrieve, and returns a string representing the value of that variable.
+
+*file-exists-p* is a built-in Emacs Lisp function that checks whether a file exists at a given path. It takes one argument, which is a string representing the file path to check. If the file exists, the function returns t. Otherwise, it returns nil.
+
+#+begin_src emacs-lisp :tangle ./desktop.el
+(defun sodcof/ssh-auth-sock-exists-p()
+  ;; check if SSH_AUTH_SOCK enviroment variable is set and points to a valid socket
+  (let ((auth-sock (getenv "SSH_AUTH_SOCK")))
+    (and auth-sock (file-exists-p auth-sock) auth-sock))
+)
+
+(defun sodcof/ssh-auth-enable()
+  (if (sodcof/ssh-auth-sock-exists-p)
+      (start-process-shell-command "ssh-agent" nil "ssh-agent")
+  )
+)
+#+end_src
 
 * Exwm
 #+begin_src emacs-lisp :tangle ./desktop.el
@@ -136,6 +154,9 @@
 
   ;; enable touchpad tapping
   (sodcof/touchpad-tapping-activated)
+
+  ;; enable ssh-agent
+  (sodcof/ssh-auth-enable)
 
   ;; Load the system tray before exwm-init
   (require 'exwm-systemtray)
