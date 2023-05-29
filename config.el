@@ -191,13 +191,13 @@
   (dap-register-debug-template
    "Django: Debug Template"
    (list :type "python"
-         :args "runserver 8083"
+         :args "runserver --noreload 8083" ;; update
          :cwd (lsp-workspace-root)
          :request "launch"
          :name "Django: Debug Template"
          :program "manage.py"
          ;; :env '(("PYTHONPATH" . "env3/bin/python"))
-         :pythonPath "env3/bin/python"
+         :pythonPath "venv/bin/python" ;; update to the path to virtual environment
          :django t
     ))
 )
