@@ -226,9 +226,18 @@
          :name "Django: Debug Template"
          :program "manage.py"
          ;; :env '(("PYTHONPATH" . "env3/bin/python"))
-         :pythonPath "venv/bin/python" ;; update to the path to virtual environment
-         :django t
-    ))
+         ;; :pythonPath "venv/bin/python" ;; update to the path to virtual environment
+         :django t))
+
+  (dap-register-debug-template
+   "Celery: Debug Template"
+   (list :type "python"
+         :cwd (lsp-workspace-root)
+         :request "launch"
+         :name "Celery: Celery Easm"
+         :program ".direnv/python-3.7.16/bin/celery" ;; update path to celery
+         :args "--app=app worker --hostname=scan-node@%%n -l info -Q scan --purge --without-mingle --without-gossip --without-heartbeat -Ofair" ;; update module name
+         :django t))
 )
 #+end_src
 
