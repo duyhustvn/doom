@@ -244,6 +244,16 @@
 *** Django template
 *--noreload* in *args* to set the autoreload off check function at the path *{virtual_env}/site-packages/django/core/management/commands/runserver.py::run()* variable *use_reload = False*
 
+
+
+
+* Golang
+#+begin_src emacs-lisp
+(after! go-mode
+  (setq gofmt-command "goimports")
+  (add-hook 'before-save-hook 'gofmt-before-save))
+#+end_src
+
 * Undo
 #+begin_src emacs-lisp
 (use-package! undo-tree

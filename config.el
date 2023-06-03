@@ -211,6 +211,10 @@
          :django t))
 )
 
+(after! go-mode
+  (setq gofmt-command "goimports")
+  (add-hook 'before-save-hook 'gofmt-before-save))
+
 (use-package! undo-tree
   :config
   (global-undo-tree-mode +1)
