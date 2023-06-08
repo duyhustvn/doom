@@ -23,6 +23,32 @@
   (split-string all-monitor "\n" t) ; => ("eDP-1" "DP-1")
 )
 
+(defun sodcof/set-up-multiple-monitor()
+  (let ((monitors (sodcof/get-list-monitors)))
+    ;; (message "current monitors: %s" monitors)
+    (if (> (length monitors) 1)
+        (progn
+          (setq main-monitor (nth 0 monitors))
+          (setq attached-monitor (nth 1 monitors))
+          ;;(message "attached-monitor: %s" attached-monitor)
+          ;;(message "main-monitor: %s" main-monitor)
+
+          ;; Using xrandr to setup multiple monitor
+          ;; xrandr --output DisplayPort-0 --primary --mode 1920x1080 --rate 144.00 --output DVI-D-0 --mode 1920x1080 --rate 60.00 --right-of DisplayPort-0
+          ;; (start-process-shell-command "xrandr" nil "xrandr --output eDP-1 --primary --mode 1920x1080 --rate 60.00 --output DP-1 --mode 1920x1080 --rate 60.00")
+          (setq xrandr-command (format "xrandr --output %s --primary --mode 1920x1080 --rate 60.00
+               --output %s --mode 1920x1080 --rate 60.00" main-monitor attached-monitor))
+          (start-process-shell-command "xrandr" nil xrandr-command)
+
+          ;; set workspace to monitor
+          ;; (setq exwm-randr-workspace-monitor-plist '(2 "HDMI-2"))
+          ;; set workspace 2 to monitor HDMI-2
+          (setq exwm-randr-workspace-monitor-plist (list 2 attached-monitor))
+        )
+    )
+  )
+)
+
 (defun sodcof/ssh-auth-sock-exists-p()
   ;; check if SSH_AUTH_SOCK enviroment variable is set and points to a valid socket
   (let ((auth-sock (getenv "SSH_AUTH_SOCK")))
@@ -91,29 +117,10 @@
   ;; Set the screen resolution (update this to be the correct resolution for your screen!)
   (require 'exwm-randr)
   (exwm-randr-enable)
-  ;; xrandr --output DisplayPort-0 --primary --mode 1920x1080 --rate 144.00 --output DVI-D-0 --mode 1920x1080 --rate 60.00 --right-of DisplayPort-0
-  ; (start-process-shell-command "xrandr" nil "xrandr --output eDP-1 --primary --mode 1920x1080 --rate 60.00
-  ;             --output DP-1 --mode 1920x1080 --rate 60.00")
-
   ;; This will need to be updated to the name of a display!  You can find
   ;; the names of your displays by looking at arandr or the output of xrandr
-  ;; (setq exwm-randr-workspace-monitor-plist '(2 "HDMI-2"))
-  ; (setq exwm-randr-workspace-monitor-plist '(2 "DP-1"))
-  (let ((monitors (sodcof/get-list-monitors)))
-    ;; (message "current monitors: %s" monitors)
-    (if (> (length monitors) 1)
-        (progn
-          (setq main-monitor (nth 0 monitors))
-          (setq attached-monitor (nth 1 monitors))
-          ;;(message "attached-monitor: %s" attached-monitor)
-          ;;(message "main-monitor: %s" main-monitor)
-          (setq xrandr-command (format "xrandr --output %s --primary --mode 1920x1080 --rate 60.00
-               --output %s --mode 1920x1080 --rate 60.00" main-monitor attached-monitor))
-          (start-process-shell-command "xrandr" nil xrandr-command)
-          (setq exwm-randr-workspace-monitor-plist (list 2 attached-monitor))
-        )
-    )
-  )
+
+  (sodcof/set-up-multiple-monitor)
 
   ;; react to display connectivity changes, do initial display update
   (add-hook 'exwm-randr-screen-change-hook #'efs/update-displays)
