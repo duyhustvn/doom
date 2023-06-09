@@ -73,10 +73,13 @@
   (pcase exwm-class-name
     ("firefox" (exwm-workspace-move-window 2)(exwm-workspace-switch-create 2))
     ("thunderbird" (exwm-workspace-move-window 3)(exwm-workspace-switch-create 3))
-    ("ViberPC" (exwm-workspace-move-window 3)(exwm-workspace-switch-create 3))
-    ("TelegramDesktop" (exwm-workspace-move-window 3)(exwm-workspace-switch-create 3))
-    ("Postman" (exwm-workspace-move-window 4)(exwm-workspace-switch-create 4))
-    ("DBeaver" (exwm-workspace-move-window 4)(exwm-workspace-switch-create 4))
+    ("ViberPC" (exwm-workspace-move-window 4)(exwm-workspace-switch-create 4))
+    ("TelegramDesktop" (exwm-workspace-move-window 4)(exwm-workspace-switch-create 4))
+    ("Postman" (exwm-workspace-move-window 5)(exwm-workspace-switch-create 5))
+    ("DBeaver" (exwm-workspace-move-window 6)(exwm-workspace-switch-create 6))
+    ("RESP.app - Developer GUI for Redis" (exwm-workspace-move-window 7)(exwm-workspace-switch-create 7))
+    ("VirtualBox Manager" (exwm-workspace-move-window 8)(exwm-workspace-switch-create 8))
+    ("VirtualBox Machine" (exwm-workspace-move-window 9)(exwm-workspace-switch-create 9))
 ))
 
 (defun efs/run-in-background (command)
@@ -97,7 +100,7 @@
 (use-package! exwm
   :config
   ;; Set the default number of workspaces
-  (setq exwm-workspace-number 5)
+  (setq exwm-workspace-number 10)
 
   ;; When window "class" updates, use it to set the buffer name
   (add-hook 'exwm-update-class-hook #'efs/exwm-update-class)
@@ -224,10 +227,9 @@
   (desktop-environment-brightness-normal-decrement "5%-"))
 
 (defun sodcof/startup-program()
-  (exwm-workspace-switch-create 3)
-  (start-process-shell-command "Viber" nil "Viber")
-  (start-process-shell-command "telegram-desktop" nil "telegram-desktop")
   (start-process-shell-command "thunderbird" nil "thunderbird")
+  (exwm-workspace-switch-create 4)
+  (start-process-shell-command "Viber" nil "Viber")
 
   ;; Launch app that will run in the background
   (efs/run-in-background "dunst")
@@ -236,6 +238,6 @@
   (efs/run-in-background "blueman-applet")
 
   (split-window-right)
-  (split-window-below)
   (windmove-right)
+  (start-process-shell-command "telegram-desktop" nil "telegram-desktop")
 )
