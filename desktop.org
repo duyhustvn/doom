@@ -8,6 +8,7 @@
 )
 #+end_src
 
+
 * Touchpad tapping
 #+begin_src emacs-lisp :tangle ./desktop.el
 (defun sodcof/touchpad-tapping-activated ()
@@ -68,6 +69,7 @@
 
 #+end_src
 
+
 * Ssh agent
 *getenv* is a built-in Emacs Lisp function that retrieves the value of an environment variable. It takes a string argument representing the name of the environment variable whose value you want to retrieve, and returns a string representing the value of that variable.
 
@@ -84,6 +86,16 @@
   (if (sodcof/ssh-auth-sock-exists-p)
       (start-process-shell-command "ssh-agent" nil "ssh-agent")
   )
+)
+#+end_src
+
+
+* Terminal
+** Ansiterm
+#+begin_src emacs-lisp
+(defun sodcof/ansi-term-zsh()
+  (interactive)
+  (ansi-term "/usr/bin/zsh")
 )
 #+end_src
 
@@ -227,7 +239,7 @@
   (exwm-input-set-key (kbd "s-a") 'counsel-linux-app)
   (exwm-input-set-key (kbd "s-b") 'switch-to-buffer)
   (exwm-input-set-key (kbd "s-h") 'dap-hydra)
-  (exwm-input-set-key (kbd "s-t") 'ansi-term)
+  (exwm-input-set-key (kbd "s-t") 'sodcof/ansi-term-zsh)
   (exwm-enable))
 
 

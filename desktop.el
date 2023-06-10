@@ -199,7 +199,7 @@
   (exwm-input-set-key (kbd "s-a") 'counsel-linux-app)
   (exwm-input-set-key (kbd "s-b") 'switch-to-buffer)
   (exwm-input-set-key (kbd "s-h") 'dap-hydra)
-  (exwm-input-set-key (kbd "s-t") 'ansi-term)
+  (exwm-input-set-key (kbd "s-t") 'sodcof/ansi-term-zsh)
   (exwm-enable))
 
 (defun sodcof/disable-desktop-notification()
@@ -227,9 +227,10 @@
   (desktop-environment-brightness-normal-decrement "5%-"))
 
 (defun sodcof/startup-program()
-  (start-process-shell-command "thunderbird" nil "thunderbird")
-  (exwm-workspace-switch-create 4)
+  (exwm-workspace-switch-create 3)
   (start-process-shell-command "Viber" nil "Viber")
+  (start-process-shell-command "telegram-desktop" nil "telegram-desktop")
+  (start-process-shell-command "thunderbird" nil "thunderbird")
 
   ;; Launch app that will run in the background
   (efs/run-in-background "dunst")
@@ -238,6 +239,6 @@
   (efs/run-in-background "blueman-applet")
 
   (split-window-right)
+  (split-window-below)
   (windmove-right)
-  (start-process-shell-command "telegram-desktop" nil "telegram-desktop")
 )
