@@ -49,6 +49,12 @@
   )
 )
 
+(defun efs/update-displays ()
+  ;; update display when plug/unplug sencond screen
+  (efs/run-in-background "autorandr --change --force")
+  ;; (message "Display config: %s" (string-trim (shell-command-to-string "autorandr --current")))
+)
+
 (defun sodcof/ssh-auth-sock-exists-p()
   ;; check if SSH_AUTH_SOCK enviroment variable is set and points to a valid socket
   (let ((auth-sock (getenv "SSH_AUTH_SOCK")))
@@ -61,14 +67,26 @@
   )
 )
 
+(defun sodcof/ansi-term-zsh ()
+  (interactive)
+  (ansi-term "/usr/bin/zsh")
+)
+
 (defun efs/exwm-update-class ()
+  ;; Set the name of buffer to the name of oppened application
   (exwm-workspace-rename-buffer exwm-class-name))
 
+
 (defun efs/exwm-update-title ()
+  ;; Improve buffer name
   (pcase exwm-class-name
     ("firefox" (exwm-workspace-rename-buffer (format "Firefox: %s" exwm-title)))))
 
 (defun efs/config-window-by-class ()
+  ;; move application to workspace by the application name
+  ;; firefox go to space 2
+  ;; thunderbird go to space 3
+  ;; etc
   (interactive)
   (pcase exwm-class-name
     ("firefox" (exwm-workspace-move-window 2)(exwm-workspace-switch-create 2))
@@ -87,15 +105,10 @@
     (apply #'call-process `(,(car command-parts) nil 0 nil ,@(cdr command-parts)))))
 
 (defun efs/exwm-init-hook ()
-  ;; make workspace 1 be the one where we land at startup
-  ;; (exwm-workspace-switch-create 1)
+  ;; start some application by default
   (sodcof/startup-program)
 )
 
-(defun efs/update-displays ()
-  (efs/run-in-background "autorandr --change --force")
-  ;; (message "Display config: %s" (string-trim (shell-command-to-string "autorandr --current")))
-)
 
 (use-package! exwm
   :config
@@ -120,8 +133,6 @@
   ;; Set the screen resolution (update this to be the correct resolution for your screen!)
   (require 'exwm-randr)
   (exwm-randr-enable)
-  ;; This will need to be updated to the name of a display!  You can find
-  ;; the names of your displays by looking at arandr or the output of xrandr
 
   (sodcof/set-up-multiple-monitor)
 
@@ -227,7 +238,10 @@
   (desktop-environment-brightness-normal-decrement "5%-"))
 
 (defun sodcof/startup-program()
-  (exwm-workspace-switch-create 3)
+  (exwm-workspace-switch-create 4)
+  (split-window-right)
+  (windmove-right)
+
   (start-process-shell-command "Viber" nil "Viber")
   (start-process-shell-command "telegram-desktop" nil "telegram-desktop")
   (start-process-shell-command "thunderbird" nil "thunderbird")
@@ -237,8 +251,4 @@
   (efs/run-in-background "nm-applet")
   (efs/run-in-background "pasystray")
   (efs/run-in-background "blueman-applet")
-
-  (split-window-right)
-  (split-window-below)
-  (windmove-right)
 )

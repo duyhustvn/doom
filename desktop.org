@@ -67,6 +67,11 @@
   )
 )
 
+(defun efs/update-displays ()
+  ;; update display when plug/unplug sencond screen
+  (efs/run-in-background "autorandr --change --force")
+  ;; (message "Display config: %s" (string-trim (shell-command-to-string "autorandr --current")))
+)
 #+end_src
 
 
@@ -92,23 +97,35 @@
 
 * Terminal
 ** Ansiterm
-#+begin_src emacs-lisp
-(defun sodcof/ansi-term-zsh()
+#+begin_src emacs-lisp :tangle ./desktop.el
+(defun sodcof/ansi-term-zsh ()
   (interactive)
   (ansi-term "/usr/bin/zsh")
 )
 #+end_src
 
+
 * Exwm
+** Buffer name
 #+begin_src emacs-lisp :tangle ./desktop.el
 (defun efs/exwm-update-class ()
+  ;; Set the name of buffer to the name of oppened application
   (exwm-workspace-rename-buffer exwm-class-name))
 
+
 (defun efs/exwm-update-title ()
+  ;; Improve buffer name
   (pcase exwm-class-name
     ("firefox" (exwm-workspace-rename-buffer (format "Firefox: %s" exwm-title)))))
+#+end_src
 
+** Arrange application by workspace
+#+begin_src emacs-lisp :tangle ./desktop.el
 (defun efs/config-window-by-class ()
+  ;; move application to workspace by the application name
+  ;; firefox go to space 2
+  ;; thunderbird go to space 3
+  ;; etc
   (interactive)
   (pcase exwm-class-name
     ("firefox" (exwm-workspace-move-window 2)(exwm-workspace-switch-create 2))
@@ -121,21 +138,20 @@
     ("VirtualBox Manager" (exwm-workspace-move-window 8)(exwm-workspace-switch-create 8))
     ("VirtualBox Machine" (exwm-workspace-move-window 9)(exwm-workspace-switch-create 9))
 ))
+#+end_src
 
+
+** Config
+#+begin_src emacs-lisp :tangle ./desktop.el
 (defun efs/run-in-background (command)
   (let ((command-parts (split-string command "[ ]+")))
     (apply #'call-process `(,(car command-parts) nil 0 nil ,@(cdr command-parts)))))
 
 (defun efs/exwm-init-hook ()
-  ;; make workspace 1 be the one where we land at startup
-  ;; (exwm-workspace-switch-create 1)
+  ;; start some application by default
   (sodcof/startup-program)
 )
 
-(defun efs/update-displays ()
-  (efs/run-in-background "autorandr --change --force")
-  ;; (message "Display config: %s" (string-trim (shell-command-to-string "autorandr --current")))
-)
 
 (use-package! exwm
   :config
@@ -160,8 +176,6 @@
   ;; Set the screen resolution (update this to be the correct resolution for your screen!)
   (require 'exwm-randr)
   (exwm-randr-enable)
-  ;; This will need to be updated to the name of a display!  You can find
-  ;; the names of your displays by looking at arandr or the output of xrandr
 
   (sodcof/set-up-multiple-monitor)
 
@@ -241,9 +255,6 @@
   (exwm-input-set-key (kbd "s-h") 'dap-hydra)
   (exwm-input-set-key (kbd "s-t") 'sodcof/ansi-term-zsh)
   (exwm-enable))
-
-
-
 #+end_src
 
 
@@ -488,7 +499,10 @@
 * Startup program
 #+begin_src emacs-lisp :tangle ./desktop.el
 (defun sodcof/startup-program()
-  (exwm-workspace-switch-create 3)
+  (exwm-workspace-switch-create 4)
+  (split-window-right)
+  (windmove-right)
+
   (start-process-shell-command "Viber" nil "Viber")
   (start-process-shell-command "telegram-desktop" nil "telegram-desktop")
   (start-process-shell-command "thunderbird" nil "thunderbird")
@@ -498,9 +512,5 @@
   (efs/run-in-background "nm-applet")
   (efs/run-in-background "pasystray")
   (efs/run-in-background "blueman-applet")
-
-  (split-window-right)
-  (split-window-below)
-  (windmove-right)
 )
 #+end_src
