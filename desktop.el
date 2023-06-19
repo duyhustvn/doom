@@ -72,6 +72,11 @@
   (ansi-term "/usr/bin/zsh")
 )
 
+(defun sodcof/nautilus ()
+  (interactive)
+  (start-process-shell-command "/usr/bin/nautilus" nil "/usr/bin/nautilus")
+)
+
 (defun efs/exwm-update-class ()
   ;; Set the name of buffer to the name of oppened application
   (exwm-workspace-rename-buffer exwm-class-name))
@@ -97,6 +102,7 @@
     ("DBeaver" (exwm-workspace-move-window 6)(exwm-workspace-switch-create 6))
     ("RESP.app - Developer GUI for Redis" (exwm-workspace-move-window 7)(exwm-workspace-switch-create 7))
     ("VirtualBox Manager" (exwm-workspace-move-window 8)(exwm-workspace-switch-create 8))
+    ("Vmplayer" (exwm-workspace-move-window 8)(exwm-workspace-switch-create 8))
     ("VirtualBox Machine" (exwm-workspace-move-window 9)(exwm-workspace-switch-create 9))
 ))
 
@@ -210,6 +216,7 @@
   (exwm-input-set-key (kbd "s-a") 'counsel-linux-app)
   (exwm-input-set-key (kbd "s-b") 'switch-to-buffer)
   (exwm-input-set-key (kbd "s-h") 'dap-hydra)
+  (exwm-input-set-key (kbd "s-e") 'sodcof/nautilus)
   (exwm-input-set-key (kbd "s-t") 'sodcof/ansi-term-zsh)
   (exwm-enable))
 
