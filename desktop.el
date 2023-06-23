@@ -23,6 +23,7 @@
   (split-string all-monitor "\n" t) ; => ("eDP-1" "DP-1")
 )
 
+
 (defun sodcof/set-up-multiple-monitor()
   (let ((monitors (sodcof/get-list-monitors)))
     ;; (message "current monitors: %s" monitors)
@@ -35,9 +36,16 @@
 
           ;; Using xrandr to setup multiple monitor
           ;; xrandr --output DisplayPort-0 --primary --mode 1920x1080 --rate 144.00 --output DVI-D-0 --mode 1920x1080 --rate 60.00 --right-of DisplayPort-0
-          ;; (start-process-shell-command "xrandr" nil "xrandr --output eDP-1 --primary --mode 1920x1080 --rate 60.00 --output DP-1 --mode 1920x1080 --rate 60.00")
-          (setq xrandr-command (format "xrandr --output %s --primary --mode 1920x1080 --rate 60.00
-               --output %s --mode 1920x1080 --rate 60.00" main-monitor attached-monitor))
+          ;; xrandr --output eDP-1 --primary --mode 1920x1080 --rate 60.00 --output HDMI-2 --mode 1920x1080 --rate 60.00 --above eDP-1
+
+          (if (string= attached-monitor 'HDMI-2)
+              (setq position "--above")
+              (setq position "--right-of"))
+
+          (setq xrandr-command (format "xrandr --output %s --primary --mode 1920x1080 --rate 60.00 --output %s --mode 1920x1080 --rate 60.00 %s %s" main-monitor attached-monitor position main-monitor))
+
+          ;; execute xrandr command
+          ;; example: (start-process-shell-command "xrandr" nil "xrandr --output eDP-1 --primary --mode 1920x1080 --rate 60.00 --output DP-1 --mode 1920x1080 --rate 60.00")
           (start-process-shell-command "xrandr" nil xrandr-command)
 
           ;; set workspace to monitor
