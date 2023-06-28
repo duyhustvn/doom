@@ -1,9 +1,9 @@
 (defun sodcof/natural-scroll-activated ()
-  (start-process-shell-command "xinput" nil "xinput set-prop 'pointer:Synaptics TM3276-022' 'libinput Natural Scrolling Enabled' 1")
+  (start-process-shell-command "xinput" nil "xinput set-prop 'pointer:ELAN0676:00 04F3:3195 Touchpad' 'libinput Natural Scrolling Enabled' 1")
 )
 
 (defun sodcof/touchpad-tapping-activated ()
-  (start-process-shell-command "xinput" nil "xinput set-prop 'pointer:Synaptics TM3276-022' 'libinput Tapping Enabled' 1")
+  (start-process-shell-command "xinput" nil "xinput set-prop 'pointer:ELAN0676:00 04F3:3195 Touchpad' 'libinput Tapping Enabled' 1")
 )
 
 (defun efs/set-wallpaper ()
