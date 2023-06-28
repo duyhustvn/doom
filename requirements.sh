@@ -32,6 +32,9 @@ install_go_tool() {
 install_go_tool
 
 install_deb() {
+    # For vterm 
+    sudo apt install -y libtool-bin cmake
+
     # For transparent background and image
     sudo apt install -y feh picom
 
