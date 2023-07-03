@@ -80,6 +80,11 @@
   (ansi-term "/usr/bin/zsh")
 )
 
+(defun sodcof/ansi-term-bash ()
+  (interactive)
+  (ansi-term "/usr/bin/bash")
+)
+
 (defun sodcof/nautilus ()
   (interactive)
   (start-process-shell-command "/usr/bin/nautilus" nil "/usr/bin/nautilus")
@@ -225,7 +230,7 @@
   (exwm-input-set-key (kbd "s-b") 'switch-to-buffer)
   (exwm-input-set-key (kbd "s-h") 'dap-hydra)
   (exwm-input-set-key (kbd "s-e") 'sodcof/nautilus)
-  (exwm-input-set-key (kbd "s-t") 'sodcof/ansi-term-zsh)
+  (exwm-input-set-key (kbd "s-t") 'sodcof/ansi-term-bash)
   (exwm-enable))
 
 (defun sodcof/disable-desktop-notification()
@@ -257,7 +262,7 @@
   (split-window-right)
   (windmove-right)
 
-  (start-process-shell-command "Viber" nil "Viber")
+  (start-process-shell-command "viber" nil "/opt/viber/Viber")
   (start-process-shell-command "telegram-desktop" nil "telegram-desktop")
   (start-process-shell-command "thunderbird" nil "thunderbird")
 
