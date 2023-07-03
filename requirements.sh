@@ -1,6 +1,9 @@
 #!/usr/bin/env sh
 
 install_go_tool() {
+  # gopls
+  go install golang.org/x/tools/gopls@latest
+
   # REPL!
   go install github.com/x-motemen/gore/cmd/gore@latest
 
