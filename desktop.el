@@ -2,6 +2,12 @@
   (start-process-shell-command "xinput" nil "xinput set-prop 'pointer:ELAN0676:00 04F3:3195 Touchpad' 'libinput Natural Scrolling Enabled' 1")
 )
 
+;; Set frame transparency
+(set-frame-parameter (selected-frame) 'alpha '(90 . 90))
+(add-to-list 'default-frame-alist '(alpha . (90 . 90)))
+(set-frame-parameter (selected-frame) 'fullscreen 'maximized)
+(add-to-list 'default-frame-alist '(fullscreen . maximized))
+
 (defun sodcof/touchpad-tapping-activated ()
   (start-process-shell-command "xinput" nil "xinput set-prop 'pointer:ELAN0676:00 04F3:3195 Touchpad' 'libinput Tapping Enabled' 1")
 )
