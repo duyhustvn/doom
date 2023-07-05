@@ -34,48 +34,51 @@ install_go_tool() {
 
 shell_config_file_path="$HOME/.bashrc"
 
-install_go_if_not_exists_deb() {
-  if ! [ -x "$(command -v go)"]; then
-    echo -n "Go is NOT installed. Let's install now"
-    snap install go --classic
-
-    if ! grep -qxF 'export GOPATH=${HOME}/go' $shell_config_file_path
-    then
-      echo 'export GOPATH=${HOME}/go' >> $shell_config_file_path
-      echo 'export PATH=$PATH:$GOPATH/bin' >> $shell_config_file_path
-      echo -n 'Reload environment'
-      source $shell_config_file_path
-    fi
-  fi
-}
-
-
 install_deb() {
+    install_go_if_not_exists() {
+      if ! [ -x "$(command -v go)"]; then
+        echo -n "Go is NOT installed. Let's install now"
+        snap install go --classic
+
+        if ! grep -qxF 'export GOPATH=${HOME}/go' $shell_config_file_path
+        then
+          echo 'export GOPATH=${HOME}/go' >> $shell_config_file_path
+          echo 'export PATH=$PATH:$GOPATH/bin' >> $shell_config_file_path
+          echo -n 'Reload environment'
+          source $shell_config_file_path
+        fi
+      fi
+    }
+
+    install_exwm_dependencies() {
+      # For transparent background and image
+      sudo apt install -y feh picom
+
+      # For desktop environment
+      sudo apt install -y scrot brightnessctl playerctl
+
+      # For tray apps
+      sudo apt install -y blueman pasystray pavucontrol
+
+      # For locking screen
+      sudo apt install -y xss-lock suckless-tools
+
+      # autorandr
+      sudo apt install -y autorandr
+
+      # dunst for notifycation
+      sudo apt install -y dunst
+    }
+
     # For vterm
     sudo apt install -y gcc g++ libtool-bin cmake
 
-    install_go_if_not_exists_deb
+    install_go_if_not_exists
 
     # Install go dependencies
     install_go_tool
 
-    # For transparent background and image
-    sudo apt install -y feh picom
-
-    # For desktop environment
-    sudo apt install -y scrot brightnessctl playerctl
-
-    # For tray apps
-    sudo apt install -y blueman pasystray pavucontrol
-
-    # For locking screen
-    sudo apt install -y xss-lock suckless-tools
-
-    # autorandr
-    sudo apt install -y autorandr
-
-    # dunst for notifycation
-    sudo apt install -y dunst
+    install_exwm_dependencies
 }
 
 PKGTYPE=unknown
