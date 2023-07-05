@@ -32,11 +32,32 @@ install_go_tool() {
   go install github.com/go-delve/delve/cmd/dlv@latest
 }
 
-install_go_tool
+shell_config_file_path="$HOME/.bashrc"
+
+install_go_if_not_exists_deb() {
+  if ! [ -x "$(command -v go)"]; then
+    echo -n "Go is NOT installed. Let's install now"
+    snap install go --classic
+
+    if ! grep -qxF 'export GOPATH=${HOME}/go' $shell_config_file_path
+    then
+      echo 'export GOPATH=${HOME}/go' >> $shell_config_file_path
+      echo 'export PATH=$PATH:$GOPATH/bin' >> $shell_config_file_path
+      echo -n 'Reload environment'
+      source $shell_config_file_path
+    fi
+  fi
+}
+
 
 install_deb() {
-    # For vterm 
-    sudo apt install -y libtool-bin cmake
+    # For vterm
+    sudo apt install -y gcc g++ libtool-bin cmake
+
+    install_go_if_not_exists_deb
+
+    # Install go dependencies
+    install_go_tool
 
     # For transparent background and image
     sudo apt install -y feh picom
