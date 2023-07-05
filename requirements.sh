@@ -36,7 +36,7 @@ shell_config_file_path="$HOME/.bashrc"
 
 install_deb() {
     install_go_if_not_exists() {
-      if ! [ -x "$(command -v go)"]; then
+      if ! [ -x "$(command -v go)" ]; then
         echo -n "Go is NOT installed. Let's install now"
         snap install go --classic
 
