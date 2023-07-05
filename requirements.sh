@@ -50,18 +50,9 @@ install_deb() {
       fi
     }
 
-    install_node_if_not_exists() {
-      if ! [ -x "$(command -v nvm)" ]; then
-        echo -n "Nvm is NOT installed."
-        wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
-
-
-        # Activate NVM in the current shell session
-        export NVM_DIR="$HOME/.nvm"
-        [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-
-        echo -n 'Install node. '
-        nvm install node
+    install_pyright() {
+      if ! [ -x "$(command -v pyright)" ]; then
+        sudo snap install pyright --classic
       fi
     }
 
@@ -90,10 +81,10 @@ install_deb() {
 
     install_go_if_not_exists
 
-    install_node_if_not_exists
+    install_pyright
 
     # Install go dependencies
-    # install_go_tool
+    install_go_tool
 
     install_exwm_dependencies
 }
