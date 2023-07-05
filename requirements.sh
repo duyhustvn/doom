@@ -54,8 +54,13 @@ install_deb() {
       if ! [ -x "$(command -v nvm)" ]; then
         echo -n "Nvm is NOT installed."
         wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
-        echo -n 'Reload environment'
-        source $shell_config_file_path
+
+
+        # Activate NVM in the current shell session
+        export NVM_DIR="$HOME/.nvm"
+        [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+
+        echo -n 'Install node. '
         nvm install node
       fi
     }
