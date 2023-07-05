@@ -57,7 +57,7 @@ install_deb() {
     }
 
     install_yaml_language_server() {
-      if ! [ -x "$(command -v pyright)" ]; then
+      if ! [ -x "$(command -v yaml-language-server)" ]; then
         sudo snap install yaml-language-server
       fi
     }
