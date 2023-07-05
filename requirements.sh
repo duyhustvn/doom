@@ -37,7 +37,7 @@ shell_config_file_path="$HOME/.bashrc"
 install_deb() {
     install_go_if_not_exists() {
       if ! [ -x "$(command -v go)" ]; then
-        echo -n "Go is NOT installed. Let's install now"
+        echo -n "Go is NOT installed."
         snap install go --classic
 
         if ! grep -qxF 'export GOPATH=${HOME}/go' $shell_config_file_path
@@ -47,6 +47,16 @@ install_deb() {
           echo -n 'Reload environment'
           source $shell_config_file_path
         fi
+      fi
+    }
+
+    install_node_if_not_exists() {
+      if ! [ -x "$(command -v nvm)" ]; then
+        echo -n "Nvm is NOT installed."
+        wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
+        echo -n 'Reload environment'
+        source $shell_config_file_path
+        nvm install node
       fi
     }
 
@@ -75,8 +85,10 @@ install_deb() {
 
     install_go_if_not_exists
 
+    install_node_if_not_exists
+
     # Install go dependencies
-    install_go_tool
+    # install_go_tool
 
     install_exwm_dependencies
 }
