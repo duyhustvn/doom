@@ -56,6 +56,12 @@ install_deb() {
       fi
     }
 
+    install_yaml_language_server() {
+      if ! [ -x "$(command -v pyright)" ]; then
+        sudo snap install yaml-language-server
+      fi
+    }
+
     install_exwm_dependencies() {
       # For transparent background and image
       sudo apt install -y feh picom
@@ -82,6 +88,8 @@ install_deb() {
     install_go_if_not_exists
 
     install_pyright
+
+    install_yaml_language_server
 
     # Install go dependencies
     install_go_tool
