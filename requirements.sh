@@ -46,40 +46,29 @@ install_deb() {
           echo 'export PATH=$PATH:$GOPATH/bin' >> $shell_config_file_path
           echo -n 'Reload environment'
           source $shell_config_file_path
+
+          # Install go dependencies
+          install_go_tool
         fi
       fi
     }
 
-    install_pyright() {
+    install_pyright_if_not_exists() {
       if ! [ -x "$(command -v pyright)" ]; then
         sudo snap install pyright --classic
       fi
     }
 
-    install_yaml_language_server() {
+    install_yaml_language_server_if_not_exists() {
       if ! [ -x "$(command -v yaml-language-server)" ]; then
         sudo snap install yaml-language-server
       fi
     }
 
-    install_exwm_dependencies() {
-      # For transparent background and image
-      sudo apt install -y feh picom
-
-      # For desktop environment
-      sudo apt install -y scrot brightnessctl playerctl
-
-      # For tray apps
-      sudo apt install -y blueman pasystray pavucontrol
-
-      # For locking screen
-      sudo apt install -y xss-lock suckless-tools
-
-      # autorandr
-      sudo apt install -y autorandr
-
-      # dunst for notifycation
-      sudo apt install -y dunst
+    install_node_if_not_exists() {
+      if ! [ -x "$(command -v node)" ]; then
+        sudo snap install node --classic
+      fi
     }
 
     # For vterm
@@ -87,14 +76,11 @@ install_deb() {
 
     install_go_if_not_exists
 
-    install_pyright
+    install_pyright_if_not_exists
 
-    install_yaml_language_server
+    install_yaml_language_server_if_not_exists
 
-    # Install go dependencies
-    install_go_tool
-
-    install_exwm_dependencies
+    install_node_if_not_exists
 }
 
 PKGTYPE=unknown
