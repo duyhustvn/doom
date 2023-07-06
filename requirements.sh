@@ -72,7 +72,7 @@ install_deb() {
     }
 
     # For vterm
-    sudo apt install -y gcc g++ libtool-bin cmake
+    sudo apt install -y gcc g++ libtool-bin cmake ripgrep
 
     install_go_if_not_exists
 
