@@ -62,3 +62,4 @@
 (package! visual-fill-column)
 (package! desktop-environment)
 (package! counsel)
+(package! treemacs-all-the-icons)
