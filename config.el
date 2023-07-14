@@ -65,7 +65,8 @@
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
 (setq doom-theme 'doom-one)
-(setq doom-themes-treemacs-theme "doom-colors")
+;; M-x treemacs-load-theme to set theme for treemacs
+(setq doom-themes-treemacs-theme 'Idea)
 
 ;; (setq debug-on-error t)
 
