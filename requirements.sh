@@ -30,6 +30,9 @@ install_go_tool() {
 
   # delve golang debug
   go install github.com/go-delve/delve/cmd/dlv@latest
+
+  # mockgen
+  go install go.uber.org/mock/mockgen@latest
 }
 
 shell_config_file_path="$HOME/.bashrc"
