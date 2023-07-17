@@ -533,9 +533,11 @@
   (split-window-right)
   (windmove-right)
 
+  (start-process-shell-command "thunderbird" nil "thunderbird")
+  (start-process-shell-command "dropbox" nil "dropbox start -i")
   (start-process-shell-command "viber" nil "/opt/viber/Viber")
   (start-process-shell-command "telegram-desktop" nil "telegram-desktop")
-  (start-process-shell-command "thunderbird" nil "thunderbird")
+
 
   ;; Launch app that will run in the background
   (efs/run-in-background "dunst")
