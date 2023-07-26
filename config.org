@@ -47,6 +47,10 @@
 ;; they are implemented.
 #+end_src
 
+* Global set key
+#+begin_src emacs-lisp
+(global-set-key (kbd "s-h") 'dap-hydra)
+#+end_src
 
 * UI Configuration
 #+begin_src emacs-lisp
