@@ -44,7 +44,7 @@
           ;; xrandr --output DisplayPort-0 --primary --mode 1920x1080 --rate 144.00 --output DVI-D-0 --mode 1920x1080 --rate 60.00 --right-of DisplayPort-0
           ;; xrandr --output eDP-1 --primary --mode 1920x1080 --rate 60.00 --output HDMI-2 --mode 1920x1080 --rate 60.00 --above eDP-1
 
-          (if (string= attached-monitor 'HDMI-2)
+          (if (string= attached-monitor 'HDMI-1)
               (setq position "--above")
               (setq position "--right-of"))
 
@@ -55,8 +55,8 @@
           (start-process-shell-command "xrandr" nil xrandr-command)
 
           ;; set workspace to monitor
-          ;; (setq exwm-randr-workspace-monitor-plist '(2 "HDMI-2"))
-          ;; set workspace 2 to monitor HDMI-2
+          ;; (setq exwm-randr-workspace-monitor-plist '(2 "HDMI-1"))
+          ;; set workspace 2 to monitor HDMI-1
           (setq exwm-randr-workspace-monitor-plist (list 2 attached-monitor))
         )
     )
