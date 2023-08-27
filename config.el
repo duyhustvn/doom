@@ -42,6 +42,8 @@
 ;; they are implemented.
 
 (global-set-key (kbd "s-h") 'dap-hydra)
+(global-set-key (kbd "s-o") 'treemacs-narrow-to-current-file)
+(global-set-key (kbd "s-c") 'treemacs-add-and-display-current-project-exclusively)
 
 ;; Doom exposes five (optional) variables for controlling fonts in Doom:
 ;;

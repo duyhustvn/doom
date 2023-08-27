@@ -50,6 +50,8 @@
 * Global set key
 #+begin_src emacs-lisp
 (global-set-key (kbd "s-h") 'dap-hydra)
+(global-set-key (kbd "s-o") 'treemacs-narrow-to-current-file)
+(global-set-key (kbd "s-c") 'treemacs-add-and-display-current-project-exclusively)
 #+end_src
 
 * UI Configuration
