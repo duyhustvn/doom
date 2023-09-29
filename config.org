@@ -153,6 +153,13 @@
 )
 #+end_src
 
+* Terminal
+** Vterm
+- Set default shell to zsh
+  #+begin_src emacs-lisp
+ (after! vterm
+   (setq vterm-shell "/bin/zsh"))
+  #+end_src
 
 * Lsp mode
 ** Ignore files watch

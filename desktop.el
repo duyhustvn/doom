@@ -237,7 +237,7 @@
   (exwm-input-set-key (kbd "s-a") 'counsel-linux-app)
   (exwm-input-set-key (kbd "s-b") 'switch-to-buffer)
   (exwm-input-set-key (kbd "s-e") 'sodcof/nautilus)
-  (exwm-input-set-key (kbd "s-t") 'sodcof/ansi-term-bash)
+  (exwm-input-set-key (kbd "s-t") 'sodcof/ansi-term-zsh)
   (exwm-enable))
 
 (defun sodcof/disable-desktop-notification()

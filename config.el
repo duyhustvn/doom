@@ -133,6 +133,9 @@
   (display-time-mode 1)
 )
 
+ (after! vterm
+   (setq vterm-shell "/bin/zsh"))
+
 (with-eval-after-load 'lsp-mode
   (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\env3\\'")
   ;; or
