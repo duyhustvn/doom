@@ -35,7 +35,7 @@ install_go_tool() {
   go install go.uber.org/mock/mockgen@latest
 }
 
-shell_config_file_path="$HOME/.bashrc"
+shell_config_file_path="$HOME/.zshrc"
 
 install_deb() {
     install_go_if_not_exists() {
@@ -74,6 +74,10 @@ install_deb() {
       fi
     }
 
+    install_font() {
+      sudo apt-get install fonts-powerline
+    }
+
     # For vterm
     sudo apt install -y gcc g++ libtool-bin cmake ripgrep
 
@@ -84,6 +88,8 @@ install_deb() {
     install_yaml_language_server_if_not_exists
 
     install_node_if_not_exists
+
+    install_font
 }
 
 PKGTYPE=unknown

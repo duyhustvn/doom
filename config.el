@@ -45,6 +45,7 @@
 (global-set-key (kbd "s-o") 'treemacs-narrow-to-current-file)
 (global-set-key (kbd "s-c") 'treemacs-add-and-display-current-project-exclusively)
 (global-set-key (kbd "s-s") 'lsp-treemacs-symbols)
+(global-set-key (kbd "s-b") 'switch-to-buffer)
 
 ;; Doom exposes five (optional) variables for controlling fonts in Doom:
 ;;
@@ -124,6 +125,7 @@
   (setq pdf-continuous-scroll-mode t)
 )
 
+;; Run nerd-icons-install-fonts to install fonts for modeline
 (after! doom-modeline
   (setq doom-modeline-buffer-encoding nil)
   ;; (setq doom-modeline-env-enable-python nil)
