@@ -44,6 +44,7 @@
 (global-set-key (kbd "s-h") 'dap-hydra)
 (global-set-key (kbd "s-o") 'treemacs-narrow-to-current-file)
 (global-set-key (kbd "s-c") 'treemacs-add-and-display-current-project-exclusively)
+(global-set-key (kbd "s-s") 'lsp-treemacs-symbols)
 
 ;; Doom exposes five (optional) variables for controlling fonts in Doom:
 ;;
@@ -69,9 +70,6 @@
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
 (setq doom-theme 'doom-one)
-;; M-x treemacs-load-theme to set theme for treemacs
-(setq doom-themes-treemacs-theme 'Idea)
-
 ;; (setq debug-on-error t)
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
@@ -105,6 +103,9 @@
 (use-package! rainbow-delimiters
   :hook ((prog-mode . rainbow-delimiters-mode))
 )
+
+;; M-x treemacs-load-theme to set theme for treemacs
+(setq doom-themes-treemacs-theme 'Idea)
 
 ;; display only opening project
 (use-package! treemacs
