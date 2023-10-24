@@ -1,3 +1,15 @@
+;; The default is 800 kilobytes.  Measured in bytes.
+(setq gc-cons-threshold (* 50 1000 1000))
+
+;; Profile emacs startup
+(add-hook 'emacs-startup-hook
+          (lambda ()
+            (message "*** Emacs loaded in %s with %d garbage collections."
+                     (format "%.2f seconds"
+                             (float-time
+                              (time-subtract after-init-time before-init-time)))
+                     gcs-done)))
+
 ;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
 
 ;; Place your private configuration here! Remember, you do not need to run 'doom
@@ -114,8 +126,10 @@
 )
 
 (use-package! paren
-  :config (show-paren-mode)
-  :custom (show-paren-style 'expression)
+  :config
+  (show-paren-mode t)
+  :custom
+  (show-paren-style 'expression)
 )
 
 (use-package! rainbow-delimiters
