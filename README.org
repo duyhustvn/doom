@@ -1,3 +1,4 @@
 - Doom emacs
 ** References:
+*** https://config.daviwil.com/emacs
 *** https://git.tecosaur.net/tec/emacs-config/src/branch/master/config.org#user-content-headline-303
