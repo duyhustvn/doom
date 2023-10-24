@@ -152,16 +152,27 @@
 
 * Treemacs
 #+begin_src emacs-lisp
-;; M-x treemacs-load-theme to set theme for treemacs
-(setq doom-themes-treemacs-theme 'Idea)
-
-;; display only opening project
 (use-package! treemacs
-  :hook (treemacs . 'treemacs-display-current-project-exclusively)
+  :hook (treemacs . (lambda ()
+                      ;; display only opening project
+                      (treemacs-add-and-display-current-project-exclusively)
+                      ;; (treemacs-narrow-to-current-file)
+                ))
+  :config
+  ;; M-x treemacs-load-theme to set theme for treemacs
+  (setq doom-themes-treemacs-theme 'Idea
+        treemacs-tag-follow-delay 1)
+  ;; (treemacs-follow-mode t)
+  (treemacs-tag-follow-mode t)
+  (treemacs-fringe-indicator-mode 'always)
 )
 
 (use-package! treemacs-projectile
   :after (treemacs projectile)
+)
+
+(use-package! treemacs-magit
+  :after (treemacs magit)
 )
 #+end_src
 
