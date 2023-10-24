@@ -31,6 +31,23 @@
 ;;   this file. Emacs searches the `load-path' when you load packages with
 ;;   `require' or `use-package'.
 ;; - `map!' for binding new keys
+;; - `:init' used to specify code that should be executed when the package is first loaded.
+;;    The code runs when the package is loaded during Emacs startup
+;;    Usecase:  setting package-specific variables
+;;              adding hooks for modes associated with the package
+;;              loading additional configuration files or functions specific to the package.
+;;
+;; - `:config' used to specify code that should be executed after the package is loaded.
+;;    The code runs after the package is loaded during Emacs startup
+;;    Usecase: customizing keybindings
+;;             setting package-specific variables
+;;             configuring package behavior
+;;             applying theme changes.
+;;
+;; - `:defer t' used to specify that the loading of package should be deferred,
+;;   meaning it will not be loaded until it's explicitly requested or needed.
+;;   It helps to reduce the startup time of Emacs because packages are loaded on-demand,
+;;   rather than all at once when Emacs start
 ;;
 ;; To get information about any of these functions/macros, move the cursor over
 ;; the highlighted symbol at press 'K' (non-evil users must press 'C-c c k').
@@ -104,6 +121,16 @@
 (use-package! rainbow-delimiters
   :hook ((prog-mode . rainbow-delimiters-mode))
 )
+
+(use-package! savehist
+  :config
+  (setq history-length 25)
+  (savehist-mode t)
+)
+
+;; shows a TODOs section in your git status buffer containing all lines with TODO
+(use-package magit-todos
+  :defer t)
 
 ;; M-x treemacs-load-theme to set theme for treemacs
 (setq doom-themes-treemacs-theme 'Idea)
