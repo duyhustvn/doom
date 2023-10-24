@@ -1,0 +1,98 @@
+#+title: Guide
+
+* Use package
+** :init
+is used to specify code that should be executed when the package is first loaded. This code typically contains initialization or setup steps for the package you're configuring.
+Here's how :init is used in Doom Emacs:
+*** Initialization Code
+You can place initialization code inside the :init block to set up the package or configure it for your workflow. This code runs when the package is loaded during Doom Emacs startup.
+For example, if you have some custom configuration for a package, such as setting variables or adding hooks, you can place that code within the :init block.
+#+begin_src emacs-lisp
+(use-package some-package
+  :init
+  (setq some-variable t)
+  (add-hook 'some-mode-hook 'my-custom-function))
+#+end_src
+*** Order of Execution
+The code within the *:init* block is executed after the package is loaded, but before its :config block (if present). This allows you to set up package-specific configurations and defaults.
+*** Purpose
+The *:init* block is typically used for package-specific initialization or basic setup. It's where you define settings that need to be in place when the package is loaded but don't require extensive configuration.
+*** Use cases
+Some common use cases for :init in Doom Emacs include setting package-specific variables, adding hooks for modes associated with the package, or loading additional configuration files or functions specific to the package.
+Here's a simple example in the context of Doom Emacs
+#+begin_src emacs-lisp
+(use-package rainbow-delimiters
+  :init
+  (add-hook 'prog-mode-hook 'rainbow-delimiters-mode))
+#+end_src
+In this example, the :init block is used to add the rainbow-delimiters-mode to the prog-mode-hook, which sets up the Rainbow Delimiters package for programming modes. This initialization code runs when the package is first loaded.
+Overall, :init is an important part of configuring packages in Doom Emacs, allowing you to set up package-specific features and behavior when the package is loaded.
+** :config
+is used to specify code that should be executed after the package is loaded. This code typically contains configuration, customization, and additional setup steps for the package you're configuring. Here's how :config is used in Doom Emacs:
+*** Configuration Code
+You can place configuration code inside the :config block to set up and customize the behavior of the package. This code runs after the package is loaded during Doom Emacs startup.
+For example, if you want to customize the keybindings, configure package-specific settings, or make package-specific changes to the user interface, you can place that code within the :config block.
+#+begin_src emacs-lisp
+(use-package some-package
+  :config
+  (setq some-variable t)
+  (define-key some-mode-map (kbd "C-c C-a") 'my-custom-function))
+#+end_src
+*** Order of Execution
+The code within the :config block is executed after the package is loaded and any code in the :init block (if present). This allows you to set up package-specific configurations, customizations, and defaults.
+*** Purpose
+The :config block is typically used for package-specific configuration, customization, and more extensive setup. It's where you define settings that influence the behavior and appearance of the package.
+*** Use Cases
+Common use cases for :config in Doom Emacs include customizing keybindings, setting package-specific variables, configuring package behavior, or applying theme changes.
+Here is a simple example in the context of Doom Emacs
+#+begin_src emacs-lisp
+(use-package rainbow-delimiters
+  :config
+  (rainbow-delimiters-mode 1))
+#+end_src
+In this example, the :config block is used to enable the rainbow-delimiters-mode for the package. This code runs after the package is loaded and sets up the desired behavior.
+
+Overall, :config is an essential part of configuring packages in Doom Emacs. It allows you to set up and customize the package's features and behavior after it's loaded, providing flexibility in how you tailor the package to your workflow.
+** :hook
+is used to attach one or more functions (usually mode-specific hooks) to a package. These functions are executed when the package is loaded and specific modes are activated.
+Here's how :hook is used:
+*** Mode-specific hooks
+:hook is typically used to attach functions to mode-specific hooks. These hooks are associated with major or minor modes, and they are triggered when those modes are activated.
+*** Initialization
+The function specified in :hook are called when the package is loaded and those models are activated. This can be thought of as a form of initialization or setup for the package
+*** Example
+#+begin_src emacs-lisp
+(use-package some-package
+  :hook (some-mode-hook another-mode-hook)
+  :config
+  (setq some-variable t))
+#+end_src
+In this example, when some-package is loaded, it's configured to run the (setq some-variable t) configuration code, and it also hooks into two modes: some-mode and another-mode. When either of these modes is activated, the package's configuration code will be executed.
+*** Benefits
+Using :hook makes it convenient to associate a package with specific modes without the need to explicitly add mode hooks in your configuration. It helps keep your configuration clean and organized, and it ensures that package-specific setup is performed when the associated modes are activated.
+*** Multiple Hooks
+You can specify multiple hooks by providing a list of hooks in the :hook keyword. For instance, you can use :hook (mode1-hook mode2-hook) to attach the package to multiple modes.
+*** Custom Functions
+In addition to attaching mode hooks, you can also use custom functions. For example, :hook (my-custom-function) will execute my-custom-function when the package is loaded.
+
+Using :hook is a powerful way to automatically set up packages for specific modes or scenarios, helping you keep your Emacs configuration organized and ensuring that the right packages are loaded and configured when you need them.
+** add-hook
+is a built-in function that allows you to add your own functions (known as "hook functions") to a hook variable. A "hook" is a list of functions that are called at a specific point in the execution of Emacs or when certain events occur.
+Here's how add-hook is typically used:
+#+begin_src emacs-lisp
+(add-hook HOOK FUNCTION &optional APPEND LOCAL)
+#+end_src
+- HOOK: This is the hook variable to which you want to add a function. Hooks are often associated with specific events or modes. Common examples include emacs-startup-hook, prog-mode-hook, and many others.
+- FUNCTION: This is the function you want to add to the hook. When the event associated with the hook occurs, this function will be called.
+- APPEND (optional): If APPEND is non-nil, it appends the function to the end of the list of functions already in the hook. If APPEND is nil (or omitted), it prepends the function to the beginning of the list.
+- LOCAL (optional): If LOCAL is non-nil, it means the function is only added to the local hook of a buffer in a buffer-local manner. This is typically used for hooks associated with buffer-specific events.
+
+Here's an example of how you might use add-hook in Emacs:
+#+begin_src emacs-lisp
+(add-hook 'emacs-startup-hook 'my-custom-function)
+#+end_src
+In this example, the my-custom-function is added to the emacs-startup-hook. This means that when Emacs is started, the my-custom-function will be called.
+
+In the context of Doom Emacs or custom Emacs configurations, you might use add-hook to customize various aspects of your setup. For example, you can add functions to hooks that run when specific modes or packages are activated, when certain events occur (like Emacs startup or buffer changes), or to customize the behavior of packages.
+
+Doom Emacs uses use-package for package management and configuration, which is a higher-level way to manage hooks for specific packages. However, if you need to make low-level customizations or if a package doesn't provide :hook support, you can use add-hook in your configuration to tailor Emacs to your specific needs.
