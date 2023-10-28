@@ -236,13 +236,24 @@
    "Go: Custom Launch File"
    (list :type "go"
          :cwd (lsp-workspace-root)
-        :request "launch"
-        :name "Go: Custom Launch File"
-        :mode "auto"
-        :program "main.go"
-        :buildFlags nil
-        :args nil
-        :env nil))
+         :request "launch"
+         :name "Go: Custom Launch File"
+         :mode "auto"
+         :program "main.go"
+         :buildFlags nil
+         :args nil
+         :env nil))
+
+  (dap-register-debug-template
+   "Go: Benchmark Template"
+   (list :type "go"
+         :request "launch"
+         :name "Go: Benchmark Template"
+         :mode "test"
+         :program nil
+         :args "-test.bench=BenchmarkXXX"
+         :env nil))
+
 )
 
 (after! dap-mode
