@@ -147,19 +147,24 @@
   :defer t)
 
 (use-package! treemacs
-  :hook (treemacs . (lambda ()
-                      ;; display only opening project
-                      (treemacs-add-and-display-current-project-exclusively)
-                      ;; (treemacs-narrow-to-current-file)
-                ))
+  ;; :hook (treemacs . 'treemacs-display-current-project-exclusively)
   :config
   ;; M-x treemacs-load-theme to set theme for treemacs
   (setq doom-themes-treemacs-theme 'Idea
         treemacs-tag-follow-delay 1)
-  ;; (treemacs-follow-mode t)
-  (treemacs-tag-follow-mode t)
+  (treemacs-follow-mode t)
+  ;; (treemacs-tag-follow-mode t)
   (treemacs-fringe-indicator-mode 'always)
+
 )
+
+;; (defun display-current-project()
+;;     (message "treemacs-mode-hook `%s'" (current-buffer))
+;;     (treemacs-add-and-display-current-project-exclusively)
+;; )
+;;
+;; (add-hook 'treemacs-mode-hook #'display-current-project)
+
 
 (use-package! treemacs-projectile
   :after (treemacs projectile)
@@ -418,3 +423,13 @@
       (org-babel-tangle))))
 
 (add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'efs/org-babel-tangle-config)))
+
+  (defun arrayify (start end quote)
+    "Turn strings on newlines into a QUOTEd, comma-separated one-liner."
+    (interactive "r\nMQuote: ")
+    (let ((insertion
+           (mapconcat
+            (lambda (x) (format "%s%s%s" quote x quote))
+            (split-string (buffer-substring start end)) ", ")))
+      (delete-region start end)
+      (insert insertion)))
