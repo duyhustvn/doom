@@ -270,34 +270,10 @@ Make startup faster by reducing the frequency of garbage collection and then use
   ;; displays floating panel with debug buttons
   ;; requies emacs 26+
   (dap-ui-controls-mode 1)
-  ;;
+  ;; golang
   (require 'dap-dlv-go)
-)
-
-(after! dap-dlv-go
-  ;; Eval Buffer with `M-x eval-buffer' to register the newly created template.
-  (dap-register-debug-template
-   "Go: Custom Launch File"
-   (list :type "go"
-         :cwd (lsp-workspace-root)
-         :request "launch"
-         :name "Go: Custom Launch File"
-         :mode "auto"
-         :program "main.go"
-         :buildFlags nil
-         :args nil
-         :env nil))
-
-  (dap-register-debug-template
-   "Go: Benchmark Template"
-   (list :type "go"
-         :request "launch"
-         :name "Go: Benchmark Template"
-         :mode "test"
-         :program nil
-         :args "-test.bench=BenchmarkXXX"
-         :env nil))
-
+  ;; cpp https://github.com/emacs-lsp/lsp-mode/blob/master/docs/tutorials/CPP-guide.md#lsp-mode-configuration
+  (require 'dap-cpptools)
 )
 #+end_src
 
@@ -336,8 +312,50 @@ Make startup faster by reducing the frequency of garbage collection and then use
 *** Django template
 *--noreload* in *args* to set the autoreload off check function at the path *{virtual_env}/site-packages/django/core/management/commands/runserver.py::run()* variable *use_reload = False*
 
+** Golang
+#+begin_src emacs-lisp
+(after! dap-dlv-go
+  ;; Eval Buffer with `M-x eval-buffer' to register the newly created template.
+  (dap-register-debug-template
+   "Go: Custom Launch File"
+   (list :type "go"
+         :cwd (lsp-workspace-root)
+         :request "launch"
+         :name "Go: Custom Launch File"
+         :mode "auto"
+         :program "main.go"
+         :buildFlags nil
+         :args nil
+         :env nil))
 
+  (dap-register-debug-template
+   "Go: Benchmark Template"
+   (list :type "go"
+         :request "launch"
+         :name "Go: Benchmark Template"
+         :mode "test"
+         :program nil
+         :args "-test.bench=BenchmarkXXX"
+         :env nil))
 
+)
+#+end_src
+
+** C/C++
+Debug template for C/C++
+Reference: https://github.com/emacs-lsp/lsp-mode/blob/master/docs/tutorials/CPP-guide.md#debugging
+#+begin_src emacs-lisp
+(dap-register-debug-template
+  "cpptools: Debug Template"
+  (list :type "cppdbg"
+        :request "launch"
+        :name "cpptools: Debug Template"
+        :MIMode "gdb"
+        :program "${workspaceFolder}/main.c"
+        :cwd "${workspaceFolder}"))
+#+end_src
+
+#+RESULTS:
 
 * Golang
 #+begin_src emacs-lisp
@@ -346,6 +364,11 @@ Make startup faster by reducing the frequency of garbage collection and then use
   (add-hook 'before-save-hook 'gofmt-before-save))
 #+end_src
 
+* C/C++
+#+begin_src emacs-lisp
+(add-to-list 'auto-mode-alist '("\\.h\\'" . c-mode))
+(add-to-list 'auto-mode-alist '("\\.hpp\\'" . c++-mode))
+#+end_src
 
 * Undo
 #+begin_src emacs-lisp

@@ -226,34 +226,10 @@
   ;; displays floating panel with debug buttons
   ;; requies emacs 26+
   (dap-ui-controls-mode 1)
-  ;;
+  ;; golang
   (require 'dap-dlv-go)
-)
-
-(after! dap-dlv-go
-  ;; Eval Buffer with `M-x eval-buffer' to register the newly created template.
-  (dap-register-debug-template
-   "Go: Custom Launch File"
-   (list :type "go"
-         :cwd (lsp-workspace-root)
-         :request "launch"
-         :name "Go: Custom Launch File"
-         :mode "auto"
-         :program "main.go"
-         :buildFlags nil
-         :args nil
-         :env nil))
-
-  (dap-register-debug-template
-   "Go: Benchmark Template"
-   (list :type "go"
-         :request "launch"
-         :name "Go: Benchmark Template"
-         :mode "test"
-         :program nil
-         :args "-test.bench=BenchmarkXXX"
-         :env nil))
-
+  ;; cpp https://github.com/emacs-lsp/lsp-mode/blob/master/docs/tutorials/CPP-guide.md#lsp-mode-configuration
+  (require 'dap-cpptools)
 )
 
 (after! dap-mode
@@ -285,9 +261,47 @@
          :django t))
 )
 
+(after! dap-dlv-go
+  ;; Eval Buffer with `M-x eval-buffer' to register the newly created template.
+  (dap-register-debug-template
+   "Go: Custom Launch File"
+   (list :type "go"
+         :cwd (lsp-workspace-root)
+         :request "launch"
+         :name "Go: Custom Launch File"
+         :mode "auto"
+         :program "main.go"
+         :buildFlags nil
+         :args nil
+         :env nil))
+
+  (dap-register-debug-template
+   "Go: Benchmark Template"
+   (list :type "go"
+         :request "launch"
+         :name "Go: Benchmark Template"
+         :mode "test"
+         :program nil
+         :args "-test.bench=BenchmarkXXX"
+         :env nil))
+
+)
+
+(dap-register-debug-template
+  "cpptools: Debug Template"
+  (list :type "cppdbg"
+        :request "launch"
+        :name "cpptools: Debug Template"
+        :MIMode "gdb"
+        :program "${workspaceFolder}/main.c"
+        :cwd "${workspaceFolder}"))
+
 (after! go-mode
   (setq gofmt-command "goimports")
   (add-hook 'before-save-hook 'gofmt-before-save))
+
+(add-to-list 'auto-mode-alist '("\\.h\\'" . c-mode))
+(add-to-list 'auto-mode-alist '("\\.hpp\\'" . c++-mode))
 
 (use-package! undo-tree
   :config

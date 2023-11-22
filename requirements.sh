@@ -78,6 +78,12 @@ install_deb() {
       sudo apt-get install fonts-powerline
     }
 
+    install_rust_if_not_exists() {
+      if ! [ -x "$(command -v rustc)" ]; then
+        curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | sh
+      fi
+    }
+
     # For vterm
     sudo apt install -y gcc g++ libtool-bin cmake ripgrep
 
@@ -90,6 +96,8 @@ install_deb() {
     install_node_if_not_exists
 
     install_font
+
+    install_rust_if_not_exists
 }
 
 PKGTYPE=unknown
