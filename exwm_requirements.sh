@@ -1,6 +1,6 @@
-#!/usr/bin/env sh
+#!/usr/bin/env zsh
 
-shell_config_file_path="$HOME/.bashrc"
+shell_config_file_path="$HOME/.zshrc"
 
 install_deb() {
     install_exwm_dependencies() {
