@@ -287,6 +287,7 @@
 
 )
 
+;; Template for debug C/C++
 (dap-register-debug-template
   "cpptools: Debug Template"
   (list :type "cppdbg"
@@ -295,6 +296,22 @@
         :MIMode "gdb"
         :program "${workspaceFolder}/main.c"
         :cwd "${workspaceFolder}"))
+
+;; Template for debug C/C++ with root permissions
+(dap-register-debug-template
+ "C++ Debug With Root Permission"
+ (list :type "cppdbg"
+       :request "launch"
+       :name "C++ Debug"
+       :program "main"
+       :stopOnEntry t
+       :cwd (lsp-workspace-root)
+       :externalConsole nil
+       :args '("-arg1" "value1" "-arg2" "value2")
+       :MIMode "gdb"
+       :setupCommands nil
+       :miDebuggerPath (format "%s/gdb_root.sh" (lsp-workspace-root))
+       ))
 
 (after! go-mode
   (setq gofmt-command "goimports")

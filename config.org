@@ -342,9 +342,11 @@ Make startup faster by reducing the frequency of garbage collection and then use
 #+end_src
 
 ** C/C++
-Debug template for C/C++
+*** Debug template for C/C++
+
 Reference: https://github.com/emacs-lsp/lsp-mode/blob/master/docs/tutorials/CPP-guide.md#debugging
 #+begin_src emacs-lisp
+;; Template for debug C/C++
 (dap-register-debug-template
   "cpptools: Debug Template"
   (list :type "cppdbg"
@@ -355,7 +357,39 @@ Reference: https://github.com/emacs-lsp/lsp-mode/blob/master/docs/tutorials/CPP-
         :cwd "${workspaceFolder}"))
 #+end_src
 
-#+RESULTS:
+
+*** Debug template for C/C++ with root permissions
+#+begin_src emacs-lisp
+;; Template for debug C/C++ with root permissions
+(dap-register-debug-template
+ "C++ Debug With Root Permission"
+ (list :type "cppdbg"
+       :request "launch"
+       :name "C++ Debug"
+       :program "main"
+       :stopOnEntry t
+       :cwd (lsp-workspace-root)
+       :externalConsole nil
+       :args '("-arg1" "value1" "-arg2" "value2")
+       :MIMode "gdb"
+       :setupCommands nil
+       :miDebuggerPath (format "%s/gdb_root.sh" (lsp-workspace-root))
+       ))
+
+#+end_src
+
+**** File gdb_root.sh
+#+begin_src shell
+
+#!/bin/bash
+SELF_PATH=$(realpath -s "$0")
+
+if [[ "$SUDO_ASKPASS" = "$SELF_PATH" ]]; then
+    zenity --password --title="$1"
+else
+    exec env SUDO_ASKPASS="$SELF_PATH" sudo -A /usr/bin/gdb $@
+fi
+#+end_src
 
 * Golang
 #+begin_src emacs-lisp
