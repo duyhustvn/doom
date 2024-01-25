@@ -1,4 +1,9 @@
-- Doom emacs
+* Doom emacs
 ** References:
 *** https://config.daviwil.com/emacs
 *** https://git.tecosaur.net/tec/emacs-config/src/branch/master/config.org#user-content-headline-303
+
+* Post-installation
+** Install theme with emacs command: all-the-icons-install-fonts
+** Install theme with emacs command: nerd-icons-install-fonts
+** Update treemacs theme with command: treemacs-load-theme
