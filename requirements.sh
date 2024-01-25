@@ -41,12 +41,12 @@ install_deb() {
     install_go_if_not_exists() {
       if ! [ -x "$(command -v go)" ]; then
         echo -n "Go is NOT installed."
-        snap install go --classic
+        # snap install go --classic
+        sudo wget -O - https://go.dev/dl/go1.21.6.linux-amd64.tar.gz | sudo tar -xzf - -C /usr/local/
 
-        if ! grep -qxF 'export GOPATH=${HOME}/go' $shell_config_file_path
+        if ! grep -qxF 'export PATH=$PATH:/usr/local/go/bin' $shell_config_file_path
         then
-          echo 'export GOPATH=${HOME}/go' >> $shell_config_file_path
-          echo 'export PATH=$PATH:$GOPATH/bin' >> $shell_config_file_path
+          echo 'export PATH=$PATH:/usr/local/go/bin' >> $shell_config_file_path
           echo -n 'Reload environment'
           source $shell_config_file_path
 
