@@ -559,6 +559,14 @@ fi
 
 #+end_src
 
+** Display image inline
+#+begin_src emacs-lisp
+(use-package! org
+  :config
+  (setq org-startup-with-inline-images t)
+)
+#+end_src
+
 ** Configure Babel Language
 #+begin_src emacs-lisp
 (org-babel-do-load-languages

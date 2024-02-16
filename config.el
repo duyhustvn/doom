@@ -452,6 +452,11 @@
 ; (use-package! visual-fill-column
 ;   :hook (org-mode . efs/org-mode-visual-fill))
 
+(use-package! org
+  :config
+  (setq org-startup-with-inline-images t)
+)
+
 (org-babel-do-load-languages
   'org-babel-load-languages
   '((emacs-lisp . t)
