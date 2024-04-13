@@ -5,3 +5,11 @@
   (should (equal (sodcof/convert-env-format-to-camel-case "TEST_ONE_TWO_THREE") "testOneTwoThree"))
   (should (equal (sodcof/convert-env-format-to-camel-case "TEST_ONE_TWO_THREE_FOUR") "testOneTwoThreeFour"))
   )
+
+(ert-deftest test-sodcof/convert-camel-case-to-env-format()
+  (should (equal (sodcof/convert-camel-case-to-env-format "test") "TEST"))
+  (should (equal (sodcof/convert-camel-case-to-env-format "testOne") "TEST_ONE"))
+  (should (equal (sodcof/convert-camel-case-to-env-format "testOneTwo") "TEST_ONE_TWO"))
+  (should (equal (sodcof/convert-camel-case-to-env-format "testOneTwoThree") "TEST_ONE_TWO_THREE"))
+  (should (equal (sodcof/convert-camel-case-to-env-format "testOneTwoThreeFour") "TEST_ONE_TWO_THREE_FOUR"))
+  )

@@ -11,3 +11,4 @@
 * How to run test
 - Go to *tests.el* buffer, eval buffer by issueing a command *eval-buffer* then executing the command *ert*
 - Type the name of function or choose the function that you want to run test
+[[file:docs/run_test.gif]]

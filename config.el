@@ -512,3 +512,26 @@
         ; (message "replaced-string %s" replaced-string)
         (delete-region start end)
         (insert (sodcof/convert-env-format-to-camel-case replaced-string))))
+
+(defun sodcof/convert-camel-case-to-env-format(str)
+  (let ((result "")
+        (str-length (length str)))
+    (dotimes (i str-length result)
+      (let ((c (aref str i)))
+        (if (and (>= c ?A)(<= c ?Z))
+            (progn
+              ;; c is uppercase
+              (setq result (concat result "_"))
+              (setq result (concat result (char-to-string c)))
+            )
+          ;; c is lowercase
+          (setq result (concat result (upcase (char-to-string c)))))))))
+
+(defun sodcof/camel-case-to-env-format(start end)
+  "Turn string in camel case format to env format for example servicePort -> SERVICE_PORT"
+  (interactive "r")
+  (let ((replaced-string (buffer-substring start end)))
+    (delete-region start end)
+    (insert (sodcof/convert-camel-case-to-env-format replaced-string))
+  )
+)
