@@ -4,6 +4,10 @@
 *** https://git.tecosaur.net/tec/emacs-config/src/branch/master/config.org#user-content-headline-303
 
 * Post-installation
-** Install theme with emacs command: all-the-icons-install-fonts
-** Install theme with emacs command: nerd-icons-install-fonts
-** Update treemacs theme with command: treemacs-load-theme
+- Install theme with emacs command: all-the-icons-install-fonts
+- Install theme with emacs command: nerd-icons-install-fonts
+- Update treemacs theme with command: treemacs-load-theme
+
+* How to run test
+- Go to *tests.el* buffer, eval buffer by issueing a command *eval-buffer* then executing the command *ert*
+- Type the name of function or choose the function that you want to run test

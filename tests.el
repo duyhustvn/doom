@@ -1,0 +1,7 @@
+(ert-deftest test-sodcof/convert-env-format-to-camel-case()
+  (should (equal (sodcof/convert-env-format-to-camel-case "TEST") "test"))
+  (should (equal (sodcof/convert-env-format-to-camel-case "TEST_ONE") "testOne"))
+  (should (equal (sodcof/convert-env-format-to-camel-case "TEST_ONE_TWO") "testOneTwo"))
+  (should (equal (sodcof/convert-env-format-to-camel-case "TEST_ONE_TWO_THREE") "testOneTwoThree"))
+  (should (equal (sodcof/convert-env-format-to-camel-case "TEST_ONE_TWO_THREE_FOUR") "testOneTwoThreeFour"))
+  )

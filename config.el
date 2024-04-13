@@ -481,7 +481,7 @@
     (delete-region start end)
     (insert insertion)))
 
-(defun convert-env-format-to-camel-case(str)
+(defun sodcof/convert-env-format-to-camel-case(str)
   "Convert string in env format to camel case for example SERVICE_PORT -> servicePort"
   (let ((result "")
         (str-length (length str))
@@ -505,10 +505,10 @@
                 (setq capitalize-next t)
               (setq result (concat result (downcase (char-to-string c)))))))))))
 
-(defun env-format-to-camel-case(start end)
+(defun sodcof/env-format-to-camel-case(start end)
   "Turn string in env format to camel case for example SERVICE_PORT -> servicePort"
   (interactive "r") ;; "r" pass 2 arguments to function the selected region, the start and end of region
   (let ((replaced-string (buffer-substring start end)))
         ; (message "replaced-string %s" replaced-string)
         (delete-region start end)
-        (insert (convert-env-format-to-camel-case replaced-string))))
+        (insert (sodcof/convert-env-format-to-camel-case replaced-string))))
