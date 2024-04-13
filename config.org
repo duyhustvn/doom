@@ -592,13 +592,47 @@ This snippet adds a hook to org-mode buffers so that efs/org-babel-tangle-config
 ** Arrayify
 Source: https://news.ycombinator.com/item?id=22129636
 #+begin_src emacs-lisp
-  (defun arrayify (start end quote)
-    "Turn strings on newlines into a QUOTEd, comma-separated one-liner."
-    (interactive "r\nMQuote: ")
-    (let ((insertion
-           (mapconcat
-            (lambda (x) (format "%s%s%s" quote x quote))
-            (split-string (buffer-substring start end)) ", ")))
-      (delete-region start end)
-      (insert insertion)))
+(defun arrayify (start end quote)
+  "Turn strings on newlines into a QUOTEd, comma-separated one-liner."
+  (interactive "r\nMQuote: ")
+  (let ((insertion
+         (mapconcat
+          (lambda (x) (format "%s%s%s" quote x quote))
+          (split-string (buffer-substring start end)) ", ")))
+    (delete-region start end)
+    (insert insertion)))
+#+end_src
+** Env Format To Camelcase
+#+begin_src emacs-lisp
+(defun convert-env-format-to-camel-case(str)
+  "Convert string in env format to camel case for example SERVICE_PORT -> servicePort"
+  (let ((result "")
+        (str-length (length str))
+        (capitalize-next nil)
+    )
+    (dotimes (i str-length result)
+      (let ((c (aref str i)))
+        (if capitalize-next
+            (progn
+              ;; capitalize-next is true
+              ;; capitalize it
+              (setq result (concat result (upcase (char-to-string (aref str i)))))
+              (setq capitalize-next nil)
+            )
+
+            (progn
+              ;; capitalize-next is false
+              ;; check if is a _, if yes set capitalize-next to true
+              ;; else downcase it
+              (if (equal c ?_) ;; ?_ is equivalent to  (string-to-char "_")
+                (setq capitalize-next t)
+              (setq result (concat result (downcase (char-to-string c)))))))))))
+
+(defun env-format-to-camel-case(start end)
+  "Turn string in env format to camel case for example SERVICE_PORT -> servicePort"
+  (interactive "r") ;; "r" pass 2 arguments to function the selected region, the start and end of region
+  (let ((replaced-string (buffer-substring start end)))
+        ; (message "replaced-string %s" replaced-string)
+        (delete-region start end)
+        (insert (convert-env-format-to-camel-case replaced-string))))
 #+end_src
