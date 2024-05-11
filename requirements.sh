@@ -64,23 +64,43 @@ install_deb() {
 
     install_yaml_language_server_if_not_exists() {
       if ! [ -x "$(command -v yaml-language-server)" ]; then
+        echo "INSTALL YAML LANGUAGE SERVER"
         sudo snap install yaml-language-server
       fi
     }
 
     install_node_if_not_exists() {
       if ! [ -x "$(command -v node)" ]; then
+        echo "INSTALL NODEJS"
         sudo snap install node --classic
       fi
     }
 
     install_font() {
+      echo "INSTALL FONTS POWERLINE"
       sudo apt-get install fonts-powerline
     }
 
     install_rust_if_not_exists() {
       if ! [ -x "$(command -v rustc)" ]; then
+        echo "INSTALL RUST"
         curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | sh
+      fi
+    }
+
+    install_neovim_if_not_exists() {
+      if ! [ -x "$(command -v nvim)" ]; then
+        echo "INSTALL NEOVIM"
+        curl -L https://github.com/neovim/neovim/releases/download/v0.9.5/nvim-linux64.tar.gz | tar -xz
+        echo "MOVE NEOVIM TO INSTALLED DIRECTORY"
+        sudo rm -r /usr/local/nvim
+        sudo mv nvim-linux64 /usr/local/nvim
+
+        if ! grep -qxF 'export PATH=$PATH:/usr/local/nvim/bin' $shell_config_file_path; then
+          echo 'export PATH=$PATH:/usr/local/nvim/bin' >> $shell_config_file_path
+          echo 'Reload environment'
+          source $shell_config_file_path
+        fi
       fi
     }
 
@@ -98,6 +118,8 @@ install_deb() {
     install_font
 
     install_rust_if_not_exists
+
+    install_neovim_if_not_exists
 }
 
 PKGTYPE=unknown
