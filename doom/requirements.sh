@@ -91,7 +91,7 @@ install_deb() {
     install_neovim_if_not_exists() {
       if ! [ -x "$(command -v nvim)" ]; then
         echo "INSTALL NEOVIM"
-        curl -L https://github.com/neovim/neovim/releases/download/v0.9.5/nvim-linux64.tar.gz | tar -xz
+	curl -L https://github.com/neovim/neovim/releases/download/v0.10.1/nvim-linux64.tar.gz | tar -xz
         echo "MOVE NEOVIM TO INSTALLED DIRECTORY"
         sudo rm -r /usr/local/nvim
         sudo mv nvim-linux64 /usr/local/nvim
