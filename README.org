@@ -1,0 +1,11 @@
+* Setup neo vim
+- Copying config for neovim by creating symbol
+#+begin_src shell
+ln -s ./nvim ~/.config/nvim
+#+end_src shell
+
+* Setup doom
+- Copying config for doom by creating symbol
+#+begin_src shell
+ln -s ./doom ~/.config/doom
+#+end_src shell
