@@ -25,4 +25,4 @@ picom &
 xss-lock -- slock &
 
 # start emacs
-emacs -mm -l ~/.config/doom/desktop.el
+emacs -mm -l ~/.config/doom/exwm/desktop.el
