@@ -35,7 +35,7 @@ install_go_tool() {
   go install go.uber.org/mock/mockgen@latest
 }
 
-shell_config_file_path="$HOME/.zshrc"
+shell_config_file_path="$HOME/.profile"
 
 install_deb() {
     install_go_if_not_exists() {
@@ -108,7 +108,7 @@ install_deb() {
         echo "**************************************"
         echo "* MOVE NEOVIM TO INSTALLED DIRECTORY *"
         echo "**************************************"
-        sudo rm -r /usr/local/nvim
+        sudo rm -rf /usr/local/nvim
         sudo mv nvim-linux64 /usr/local/nvim
 
         if ! grep -qxF 'export PATH=$PATH:/usr/local/nvim/bin' $shell_config_file_path; then
@@ -119,6 +119,7 @@ install_deb() {
       fi
     }
 
+    sudo apt install -y git wget curl 
     # For vterm
     sudo apt install -y gcc g++ libtool-bin cmake ripgrep
 
@@ -155,16 +156,16 @@ else
   fi
 fi
 
-if [ "$ID" -ne 0 ]; then
-  if ! hash sudo 2>/dev/null; then
-    echo "This script must be executed as the 'root' user or with sudo"
-    exit 1
-  else
-    echo "Switching to root user to update the package"
-    sudo -E $0 $@
-    exit 0
-  fi
-fi
+# if [ "$ID" -ne 0 ]; then
+#   if ! hash sudo 2>/dev/null; then
+#     echo "This script must be executed as the 'root' user or with sudo"
+#     exit 1
+#   else
+#     echo "Switching to root user to update the package"
+#     sudo -E $0 $@
+#     exit 0
+#   fi
+# fi
 
 case $PKGTYPE in
   deb)
