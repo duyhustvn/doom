@@ -96,6 +96,7 @@ install_deb() {
         echo "* INSTALL RUST *"
         echo "****************"
         curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | sh
+        rustup component add rust-analyzer
       fi
     }
 
